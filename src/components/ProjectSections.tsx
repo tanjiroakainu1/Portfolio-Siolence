@@ -6,6 +6,18 @@ function iconKey(group: ProjectGroup): ProjectGroupIconKey {
   return group.icon ?? "globe";
 }
 
+function projectPreviewUrl(href: string): string {
+  return `https://image.thum.io/get/width/900/noanimate/${href}`;
+}
+
+function projectHost(href: string): string {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return href;
+  }
+}
+
 export function ProjectSections({ groups }: { groups: ProjectGroup[] }) {
   return (
     <>
@@ -31,13 +43,29 @@ export function ProjectSections({ groups }: { groups: ProjectGroup[] }) {
                     rel="noopener noreferrer"
                     className="group electric-project-row"
                   >
-                    <span
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-accent/35 bg-cyan-500/12 text-bolt shadow-bolt-sm"
-                      aria-hidden
-                    >
-                      <ProjectGroupIcon name={key} className="h-[0.88rem] w-[0.88rem]" />
+                    <span className="relative h-14 w-24 shrink-0 overflow-hidden rounded-lg border border-cyan-400/35 bg-surface-2/90 shadow-[0_8px_22px_rgba(0,0,0,0.35)]">
+                      <img
+                        src={projectPreviewUrl(item.href)}
+                        alt={`${item.label} preview`}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                        onError={(e) => {
+                          e.currentTarget.src = "/images/picture.jpg";
+                        }}
+                      />
+                      <span className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-page/45 via-transparent to-cyan-500/10" />
+                      <span className="absolute bottom-1 left-1 inline-flex h-5 w-5 items-center justify-center rounded-md border border-accent/35 bg-page/70 text-bolt backdrop-blur-sm">
+                        <ProjectGroupIcon name={key} className="h-[0.65rem] w-[0.65rem]" />
+                      </span>
                     </span>
-                    <span className="hover-pop-text min-w-0 flex-1 [overflow-wrap:anywhere]">{item.label}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="hover-pop-text block [overflow-wrap:anywhere]">{item.label}</span>
+                      <span className="mt-0.5 block text-[0.68rem] font-medium text-slate-400">
+                        {projectHost(item.href)}
+                      </span>
+                    </span>
                     <span className="shrink-0 text-slate-500 opacity-80 transition-[opacity,color] group-hover:opacity-100 group-hover:text-bolt">
                       <ExternalLinkIcon className="h-[0.95rem] w-[0.95rem]" />
                     </span>

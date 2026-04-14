@@ -66,6 +66,33 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
               <p className="m-0 text-[0.92em] leading-relaxed text-slate-300">{profile.cta}</p>
             </div>
           </div>
+
+          <section className="mt-7 w-full max-w-[36rem] rounded-2xl border border-violet-400/28 bg-gradient-to-br from-violet-500/10 via-page/85 to-cyan-500/10 p-4 text-left shadow-[0_8px_28px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-5">
+            <p className="m-0 text-center text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-cyan-200/90">
+              {profile.storyLead}
+            </p>
+            <div className="mt-3 grid gap-3">
+              {profile.developmentStories.map((story) => (
+                <article
+                  key={story.title}
+                  className="rounded-xl border border-white/10 bg-surface-2/70 p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                >
+                  <h3 className="m-0 text-[0.9rem] font-semibold tracking-[0.01em] text-slate-100">
+                    {story.title}
+                  </h3>
+                  <p className="mt-2 mb-0 text-[0.82rem] text-slate-300">
+                    <span className="font-semibold text-cyan-200">Core:</span> {story.context}
+                  </p>
+                  <p className="mt-1.5 mb-0 text-[0.82rem] text-slate-300">
+                    <span className="font-semibold text-violet-200">Implementation:</span> {story.build}
+                  </p>
+                  <p className="mt-1.5 mb-0 text-[0.82rem] text-slate-300">
+                    <span className="font-semibold text-emerald-200">Outcome:</span> {story.impact}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
 

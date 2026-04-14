@@ -26,6 +26,13 @@ export interface Profile {
   tagline: string;
   intro: string;
   introClosing: string;
+  storyLead: string;
+  developmentStories: {
+    title: string;
+    context: string;
+    build: string;
+    impact: string;
+  }[];
   highlights: string[];
   chipsLabel: string;
   cta: string;
@@ -35,10 +42,32 @@ export const profile: Profile = {
   name: "Raminder Jangao",
   title: "Full-stack developer",
   year: "2026",
-  tagline: "Web, mobile, games & AI — from class projects to production-ready systems.",
+  tagline: "Web, mobile, games, and AI experiences crafted from concept to production-ready systems.",
   intro:
-    "I design and ship full-stack software with clear communication and flexible scope. Student-friendly rates, transparent pricing, and shareable demos.",
-  introClosing: "When you reach out, you get a real person — not an autoresponder.",
+    "I design and deliver full-stack software with clear communication, thoughtful architecture, and flexible scope. Expect transparent pricing, student-friendly options, and demos you can confidently share.",
+  introClosing:
+    "When you message me, you talk directly with the builder behind the product, not an automated responder.",
+  storyLead: "Tech Stack Insights",
+  developmentStories: [
+    {
+      title: "Frontend experience stack",
+      context: "React + TypeScript provides a reliable foundation for scalable interfaces and safer long-term refactoring.",
+      build: "Tailwind CSS accelerates responsive layout work, reusable UI patterns, and rapid design iteration.",
+      impact: "The result is a cleaner user experience, easier upkeep, and stronger performance on every screen size.",
+    },
+    {
+      title: "Backend and API flow",
+      context: "Node.js + Express powers chat routing while keeping API credentials protected on the server side.",
+      build: "OpenRouter is integrated with structured request/response handling, explicit validation, and fail-safe error paths.",
+      impact: "This keeps AI replies dependable, debugging faster, and production behavior more predictable.",
+    },
+    {
+      title: "Deployment and developer workflow",
+      context: "Vite enables fast local feedback loops and optimized production bundles for real deployments.",
+      build: "Environment-driven configuration (`.env`) plus static hosting targets keeps each release controlled and repeatable.",
+      impact: "Updates ship faster, deployments stay stable, and collaboration remains smooth as the project grows.",
+    },
+  ],
   highlights: [
     "Always open for development",
     "Accepting commissions",
@@ -47,7 +76,7 @@ export const profile: Profile = {
   ],
   chipsLabel: "At a glance",
   cta:
-    "Ready to build? Share your idea or budget — I cover frontend, backend, databases, and APIs, and we iterate until it feels right.",
+    "Ready to build something real? Share your concept, goals, or budget and I will handle frontend, backend, databases, and APIs with iterative delivery until it feels exactly right.",
 };
 
 export type SkillIconKey =
@@ -105,6 +134,19 @@ export interface ProjectGroup {
 }
 
 export const projectGroups: ProjectGroup[] = [
+  {
+    title: "New deployed systems",
+    icon: "globe",
+    items: [
+      {
+        label: "Google Drive reference",
+        href: "https://drive.google.com/drive/folders/1SB37yUhb2avisPWcPbiI1yQ1rpPi-42i?fbclid=IwY2xjawRK9wFleHRuA2FlbQIxMABicmlkETE0TDhhZ245WW5KellJanhnc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHozanYPraSPYWfmxS8rhRgrdXjlkR0eWxrbMzCj5YJEoaPrsgYS1gz472BXV_aem_KT4lgAJKY-RRQp8_mJi2og",
+      },
+      { label: "House Rental AI", href: "https://house-rental-ai.vercel.app/" },
+      { label: "Drive Ease AI", href: "https://drive-ease-ai.vercel.app/" },
+      { label: "School Report System AI", href: "https://school-report-system-ai.vercel.app/" },
+    ],
+  },
   {
     title: "AI, ERP & guides",
     icon: "ai",

@@ -19,6 +19,21 @@ function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+function formatAssistantReply(raw: string): string {
+  const normalized = raw.replace(/\r\n/g, "\n").trim();
+  if (!normalized) return "";
+
+  // If model returns a long single-line numbered list, split items into lines.
+  if (!normalized.includes("\n")) {
+    const hasManyItems = (normalized.match(/\b\d+\.\s/g) ?? []).length >= 2;
+    if (hasManyItems) {
+      return normalized.replace(/\s+(\d+\.\s)/g, "\n$1").trim();
+    }
+  }
+
+  return normalized;
+}
+
 function TypingDots() {
   return (
     <span className="inline-flex gap-1.5 py-0.5" aria-hidden>
@@ -94,7 +109,7 @@ export function ChatView({ hidden }: { hidden: boolean }) {
         threadRef.current.pop();
         return;
       }
-      const reply = data.text ?? "";
+      const reply = formatAssistantReply(data.text ?? "");
       threadRef.current.push({ role: "assistant", content: reply });
       setLines((prev) => [
         ...prev,
@@ -174,7 +189,7 @@ export function ChatView({ hidden }: { hidden: boolean }) {
                 return (
                   <div
                     key={line.id}
-                    className="max-w-[95%] self-center rounded-xl border border-danger/25 bg-danger/10 px-3 py-2 text-center text-sm text-danger [overflow-wrap:anywhere]"
+                    className="max-w-[95%] self-center whitespace-pre-wrap rounded-xl border border-danger/25 bg-danger/10 px-3 py-2 text-center text-sm text-danger [overflow-wrap:anywhere]"
                   >
                     {line.content}
                   </div>
@@ -189,7 +204,7 @@ export function ChatView({ hidden }: { hidden: boolean }) {
                     >
                       You
                     </span>
-                    <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] rounded-2xl rounded-tr-sm bg-gradient-to-br from-cyan-600/22 to-violet-600/18 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-sm ring-1 ring-cyan-400/25 [overflow-wrap:anywhere] sm:text-[0.9375rem]">
+                    <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tr-sm bg-gradient-to-br from-cyan-600/22 to-violet-600/18 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-sm ring-1 ring-cyan-400/25 [overflow-wrap:anywhere] sm:text-[0.9375rem]">
                       {line.content}
                     </div>
                   </div>
@@ -206,7 +221,7 @@ export function ChatView({ hidden }: { hidden: boolean }) {
                     decoding="async"
                     loading="lazy"
                   />
-                  <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] rounded-2xl rounded-tl-sm bg-surface-2/90 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring-1 ring-white/[0.08] [overflow-wrap:anywhere] sm:text-[0.9375rem]">
+                  <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-surface-2/90 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring-1 ring-white/[0.08] [overflow-wrap:anywhere] sm:text-[0.9375rem]">
                     {line.content}
                   </div>
                 </div>
