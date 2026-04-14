@@ -47,25 +47,25 @@ export const profile: Profile = {
     "I design and deliver full-stack software with clear communication, thoughtful architecture, and flexible scope. Expect transparent pricing, student-friendly options, and demos you can confidently share.",
   introClosing:
     "When you message me, you talk directly with the builder behind the product, not an automated responder.",
-  storyLead: "Tech Stack Insights",
+  storyLead: "Solution-Driven System Stories",
   developmentStories: [
     {
-      title: "Frontend experience stack",
-      context: "React + TypeScript provides a reliable foundation for scalable interfaces and safer long-term refactoring.",
-      build: "Tailwind CSS accelerates responsive layout work, reusable UI patterns, and rapid design iteration.",
-      impact: "The result is a cleaner user experience, easier upkeep, and stronger performance on every screen size.",
+      title: "Fast request handling for busy teams",
+      context: "Daily requests were piling up and updates were difficult to track from start to finish.",
+      build: "I redesigned the workflow to make each request clearer, easier to assign, and simpler to follow.",
+      impact: "Teams handled tasks faster, reduced confusion, and delivered updates with more confidence.",
     },
     {
-      title: "Backend and API flow",
-      context: "Node.js + Express powers chat routing while keeping API credentials protected on the server side.",
-      build: "OpenRouter is integrated with structured request/response handling, explicit validation, and fail-safe error paths.",
-      impact: "This keeps AI replies dependable, debugging faster, and production behavior more predictable.",
+      title: "Better guidance for end users",
+      context: "Users needed quick answers but often got stuck waiting for manual support.",
+      build: "I created a guided support flow that keeps conversations clear, focused, and easy to navigate.",
+      impact: "People got help sooner, support load decreased, and user satisfaction improved.",
     },
     {
-      title: "Deployment and developer workflow",
-      context: "Vite enables fast local feedback loops and optimized production bundles for real deployments.",
-      build: "Environment-driven configuration (`.env`) plus static hosting targets keeps each release controlled and repeatable.",
-      impact: "Updates ship faster, deployments stay stable, and collaboration remains smooth as the project grows.",
+      title: "Reliable project delivery cycles",
+      context: "Frequent updates were needed, but consistency across releases was hard to maintain.",
+      build: "I introduced a cleaner release rhythm with clear checkpoints and repeatable deployment practices.",
+      impact: "Updates became smoother, rollout quality improved, and project momentum stayed strong.",
     },
   ],
   highlights: [
