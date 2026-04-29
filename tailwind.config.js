@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"DM Sans"', "system-ui", "sans-serif"],
+        display: ['"Outfit"', '"DM Sans"', "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
       },
       colors: {
@@ -57,12 +58,17 @@ export default {
           "0%, 80%, 100%": { transform: "translateY(0)", opacity: "0.4" },
           "40%": { transform: "translateY(-4px)", opacity: "1" },
         },
+        "nav-welcome-line": {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "float-particle": "float-particle var(--d, 30s) ease-in-out infinite",
         "chat-pulse": "chat-pulse 2.4s ease-out infinite",
         "typing-bounce": "typing-bounce 1.2s infinite ease-in-out",
         "grid-pulse": "grid-pulse 8s ease-in-out infinite",
+        "nav-welcome-line": "nav-welcome-line 0.55s ease-out both",
       },
     },
   },

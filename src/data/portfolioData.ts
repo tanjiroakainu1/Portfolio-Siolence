@@ -98,15 +98,28 @@ export interface SkillRow {
   icon: SkillIconKey;
 }
 
+/** Section heading for stack on Portfolio (`#stack`) and Project showcase. */
+export const stackSectionTitle = "Programming languages, frameworks & databases";
+
 export const skills: SkillRow[] = [
   { text: "Docker · Kubernetes", icon: "infra" },
   { text: "Python (Flask, Django) · PHP (native, Laravel)", icon: "backend" },
-  { text: "Vue · React · Angular · Next.js · TypeScript · JavaScript", icon: "frontend" },
-  { text: "React Native · Expo · Supabase · Firebase", icon: "mobile" },
+  {
+    text: "Vue · Svelte · React · Angular · TypeScript · JavaScript",
+    icon: "frontend",
+  },
+  { text: "React Native · Expo · Android APK", icon: "mobile" },
+  {
+    text: "React.js · Next.js · JSX · TypeScript",
+    icon: "frontend",
+  },
   { text: "Flutter · Dart (web & mobile)", icon: "flutter" },
   { text: "Java, Kotlin, Swift · Android APK", icon: "native" },
   { text: "C# · JavaFX", icon: "dotnet" },
-  { text: "MySQL · MongoDB · SQLite", icon: "database" },
+  {
+    text: "MySQL · MongoDB · SQLite · PostgreSQL · Supabase · Firebase",
+    icon: "database",
+  },
   { text: "Bootstrap · Tailwind CSS · Bulma · Vanilla HTML/CSS", icon: "styles" },
   { text: "Git · Ruby · Perl · Lua", icon: "tools" },
   { text: "Windows & macOS", icon: "os" },
@@ -133,20 +146,23 @@ export interface ProjectGroup {
   items: ProjectItem[];
 }
 
+/** Shown on header navigation transition overlay (Portfolio / Project / Chat). */
+export const headerNavWelcome = {
+  eyebrow: "Studio welcome",
+  title: "Welcome, Clients",
+  subtitle: "Inquire for",
+  services: [
+    "Web Development",
+    "App Development",
+    "Game Development",
+    "AI Chatbot Applications",
+  ],
+  progressLabel: "Preparing workspace",
+  progressMessage: "Loading your workspace. Almost there.",
+  transitionMs: 2600,
+} as const;
+
 export const projectGroups: ProjectGroup[] = [
-  {
-    title: "New deployed systems",
-    icon: "globe",
-    items: [
-      {
-        label: "Google Drive reference",
-        href: "https://drive.google.com/drive/folders/1SB37yUhb2avisPWcPbiI1yQ1rpPi-42i?fbclid=IwY2xjawRK9wFleHRuA2FlbQIxMABicmlkETE0TDhhZ245WW5KellJanhnc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHozanYPraSPYWfmxS8rhRgrdXjlkR0eWxrbMzCj5YJEoaPrsgYS1gz472BXV_aem_KT4lgAJKY-RRQp8_mJi2og",
-      },
-      { label: "House Rental AI", href: "https://house-rental-ai.vercel.app/" },
-      { label: "Drive Ease AI", href: "https://drive-ease-ai.vercel.app/" },
-      { label: "School Report System AI", href: "https://school-report-system-ai.vercel.app/" },
-    ],
-  },
   {
     title: "AI, ERP & guides",
     icon: "ai",

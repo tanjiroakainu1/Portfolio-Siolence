@@ -1,155 +1,51 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { assistant, profile, youtubeChannel } from "../data/portfolioData";
-import { buildSystemPrompt } from "../lib/systemPrompt";
+import { useEffect } from "react";
+import { assistant } from "../data/portfolioData";
+import { useChatSession } from "../context/ChatSessionContext";
 import { FloatingParticles } from "./FloatingParticles";
+import { ChatMessageThread } from "./ChatMessageThread";
 import { SendIcon } from "../icons";
 
-type BubbleRole = "user" | "assistant" | "system";
-
-interface ChatLine {
-  id: string;
-  role: BubbleRole;
-  content: string;
-}
-
-const MODEL = "openai/gpt-4o-mini";
-const AVATAR_MSG = "h-9 w-9 shrink-0";
-
-function uid() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
-
-function formatAssistantReply(raw: string): string {
-  const normalized = raw.replace(/\r\n/g, "\n").trim();
-  if (!normalized) return "";
-
-  // If model returns a long single-line numbered list, split items into lines.
-  if (!normalized.includes("\n")) {
-    const hasManyItems = (normalized.match(/\b\d+\.\s/g) ?? []).length >= 2;
-    if (hasManyItems) {
-      return normalized.replace(/\s+(\d+\.\s)/g, "\n$1").trim();
-    }
-  }
-
-  return normalized;
-}
-
-function TypingDots() {
-  return (
-    <span className="inline-flex gap-1.5 py-0.5" aria-hidden>
-      <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-accent/70 [animation-delay:0ms]" />
-      <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-accent/70 [animation-delay:150ms]" />
-      <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-accent/70 [animation-delay:300ms]" />
-    </span>
-  );
-}
-
 export function ChatView({ hidden }: { hidden: boolean }) {
-  const systemPrompt = buildSystemPrompt(assistant, profile, youtubeChannel);
-  const threadRef = useRef<{ role: string; content: string }[]>([
-    { role: "system", content: systemPrompt },
-  ]);
-
-  const welcome = `Hi — I’m ${assistant.name}. You can ask me anything: general questions, coding, study tips, ideas — I’ll stay polite and do my best. I can also tell you about Raminder’s work, stack, and demos (YouTube: ${youtubeChannel.handle}). For quotes or hiring, use Contact & social on the Portfolio page.`;
-
-  const [lines, setLines] = useState<ChatLine[]>([
-    { id: uid(), role: "assistant", content: welcome },
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const messagesRef = useRef<HTMLDivElement>(null);
-  const formId = useId();
-
-  const scrollToBottom = useCallback(() => {
-    const el = messagesRef.current;
-    if (!el) return;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        el.scrollTop = el.scrollHeight;
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [lines, loading, scrollToBottom]);
+  const {
+    lines,
+    input,
+    setInput,
+    loading,
+    onSubmit,
+    onInputKeyDown,
+    inputRef,
+    messagesRef,
+    formId,
+    inputFieldId,
+    focusInput,
+  } = useChatSession();
 
   useEffect(() => {
     if (!hidden) {
-      inputRef.current?.focus();
+      focusInput();
       window.scrollTo(0, 0);
     }
-  }, [hidden]);
+  }, [hidden, focusInput]);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = input.trim();
-    if (!text || loading) return;
-
-    setInput("");
-    const userLine: ChatLine = { id: uid(), role: "user", content: text };
-    setLines((prev) => [...prev, userLine]);
-    threadRef.current.push({ role: "user", content: text });
-
-    setLoading(true);
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: threadRef.current,
-          model: MODEL,
-        }),
-      });
-      const data = (await res.json().catch(() => ({}))) as { error?: string; text?: string };
-      if (!res.ok) {
-        const err = data.error ?? res.statusText ?? "Request failed";
-        setLines((prev) => [...prev, { id: uid(), role: "system", content: String(err) }]);
-        threadRef.current.pop();
-        return;
-      }
-      const reply = formatAssistantReply(data.text ?? "");
-      threadRef.current.push({ role: "assistant", content: reply });
-      setLines((prev) => [
-        ...prev,
-        { id: uid(), role: "assistant", content: reply || "(empty response)" },
-      ]);
-    } catch (err) {
-      setLines((prev) => [
-        ...prev,
-        {
-          id: uid(),
-          role: "system",
-          content: err instanceof Error ? err.message : "Network error",
-        },
-      ]);
-      threadRef.current.pop();
-    } finally {
-      setLoading(false);
-      if (!hidden) inputRef.current?.focus();
-    }
-  };
-
-  const onInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key !== "Enter") return;
-    if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) return;
-    // Let IME composition finish before submitting (e.g. Japanese/Chinese input).
-    if (e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
-    e.preventDefault();
-    e.currentTarget.form?.requestSubmit();
-  };
+  if (hidden) {
+    return (
+      <section
+        id="view-chat"
+        className="relative z-10 hidden min-h-0 flex-1 flex-col"
+        aria-label={`${assistant.name} chat`}
+        aria-hidden
+      />
+    );
+  }
 
   return (
     <section
       id="view-chat"
       className="relative z-10 flex min-h-0 flex-1 flex-col"
       aria-label={`${assistant.name} chat`}
-      hidden={hidden}
     >
       <FloatingParticles variant="chat" />
       <div className="relative z-[1] mx-auto flex min-h-0 w-full max-w-[min(48rem,100%)] flex-1 flex-col px-[clamp(0.75rem,3.5vw,1.25rem)] pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] pt-3 sm:px-6 sm:pb-4 sm:pt-4 lg:max-w-[52rem]">
-        {/* Single card: fills remaining viewport; messages pane scrolls inside */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-cyan-400/35 bg-surface/85 shadow-[0_8px_40px_rgba(0,0,0,0.45),0_0_56px_rgba(34,211,238,0.1),inset_0_1px_0_rgba(255,255,255,0.08)] ring-1 ring-cyan-400/12 backdrop-blur-md">
           <div className="flex shrink-0 items-center justify-between gap-3 border-b border-cyan-400/20 px-3 py-2.5 sm:px-4">
             <a
@@ -174,75 +70,12 @@ export function ChatView({ hidden }: { hidden: boolean }) {
             {assistant.headerTagline}
           </p>
 
-          <div
-            ref={messagesRef}
-            className="chat-messages-scroll flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain px-3 py-3 sm:gap-3.5 sm:px-4 sm:py-4"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(34,211,238,0.05) 0%, transparent 32%), radial-gradient(ellipse 80% 50% at 100% 0%, rgba(139,92,246,0.08), transparent 50%), #0a1220",
-            }}
-            role="log"
-            aria-live="polite"
-          >
-            {lines.map((line) => {
-              if (line.role === "system") {
-                return (
-                  <div
-                    key={line.id}
-                    className="max-w-[95%] self-center whitespace-pre-wrap rounded-xl border border-danger/25 bg-danger/10 px-3 py-2 text-center text-sm text-danger [overflow-wrap:anywhere]"
-                  >
-                    {line.content}
-                  </div>
-                );
-              }
-              if (line.role === "user") {
-                return (
-                  <div key={line.id} className="flex w-full flex-row-reverse items-start gap-2.5 sm:gap-3">
-                    <span
-                      className={`${AVATAR_MSG} mt-0.5 flex items-center justify-center rounded-full border border-cyan-400/35 bg-cyan-500/15 text-[0.6rem] font-bold uppercase tracking-wider text-bolt`}
-                      aria-hidden
-                    >
-                      You
-                    </span>
-                    <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tr-sm bg-gradient-to-br from-cyan-600/22 to-violet-600/18 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-sm ring-1 ring-cyan-400/25 [overflow-wrap:anywhere] sm:text-[0.9375rem]">
-                      {line.content}
-                    </div>
-                  </div>
-                );
-              }
-              return (
-                <div key={line.id} className="flex w-full items-start gap-2.5 sm:gap-3">
-                  <img
-                    className={`${AVATAR_MSG} mt-0.5 rounded-full border border-white/10 bg-surface-2 object-cover ring-1 ring-cyan-400/25`}
-                    src={assistant.avatarSrc}
-                    alt=""
-                    width={36}
-                    height={36}
-                    decoding="async"
-                    loading="lazy"
-                  />
-                  <div className="min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-surface-2/90 px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ring-1 ring-white/[0.08] [overflow-wrap:anywhere] sm:text-[0.9375rem]">
-                    {line.content}
-                  </div>
-                </div>
-              );
-            })}
-
-            {loading ? (
-              <div className="flex w-full items-start gap-2.5 sm:gap-3">
-                <img
-                  className={`${AVATAR_MSG} mt-0.5 rounded-full border border-white/10 bg-surface-2 object-cover ring-1 ring-cyan-400/25`}
-                  src={assistant.avatarSrc}
-                  alt=""
-                  width={36}
-                  height={36}
-                />
-                <div className="flex min-h-[2.5rem] items-center rounded-2xl rounded-tl-sm bg-surface-2/90 px-3.5 py-2.5 ring-1 ring-white/[0.08]">
-                  <TypingDots />
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <ChatMessageThread
+            lines={lines}
+            loading={loading}
+            messagesRef={messagesRef}
+            compact={false}
+          />
 
           <form
             id={formId}
@@ -254,7 +87,7 @@ export function ChatView({ hidden }: { hidden: boolean }) {
                 <span className="sr-only">Message {assistant.name}</span>
                 <textarea
                   ref={inputRef}
-                  id={`${formId}-input`}
+                  id={inputFieldId}
                   rows={3}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}

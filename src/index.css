@@ -7,6 +7,31 @@
   .bg-clip-text.text-transparent {
     -webkit-text-fill-color: transparent;
   }
+
+  /* Header route transition — subtle title sheen (motion-safe) */
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-welcome-title-shine {
+      background-size: 200% auto;
+      animation: nav-welcome-shine 4.5s ease-in-out infinite;
+    }
+  }
+
+  @keyframes nav-welcome-shine {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+  }
+
+  /* Formal nav overlay labels: small caps + tracking (no raw ALL CAPS in copy) */
+  .nav-welcome-formal-label {
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-variant: all-small-caps;
+    letter-spacing: 0.14em;
+  }
 }
 
 @layer base {

@@ -29,6 +29,15 @@ export function NavChatIcon({ className }: IconProps) {
   );
 }
 
+/** Mobile APK / Google Drive builds — header nav */
+export function NavClientDriveIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width={18} height={18} viewBox="0 0 24 24" aria-hidden {...stroke}>
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
 export function SocialIcon({ network, className }: IconProps & { network: SocialNetwork }) {
   if (network === "youtube") {
     return (
