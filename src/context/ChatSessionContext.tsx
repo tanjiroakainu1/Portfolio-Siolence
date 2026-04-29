@@ -201,5 +201,3 @@ export function useChatSession(): ChatSessionContextValue {
   if (!ctx) throw new Error("useChatSession must be used within ChatSessionProvider");
   return ctx;
 }
-
-export { assistant as chatAssistant };

@@ -1,9 +1,11 @@
 /** Raminder Jangao — portfolio content (edit labels/URLs here). */
 
+import portraitImageFile from "../../image/picture.jpg";
+
 /**
- * Hero + chat avatar. Source file: `image/picture.jpg` — copied to `public/images/` for the build.
+ * Hero, SIOLENCE avatar, and chat bubbles — bundled from `image/picture.jpg` at repo root.
  */
-export const portraitImageSrc = "/images/picture.jpg";
+export const portraitImageSrc: string = portraitImageFile;
 
 export interface Assistant {
   name: string;

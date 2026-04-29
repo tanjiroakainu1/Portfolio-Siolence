@@ -1,5 +1,6 @@
 import type { ProjectGroup } from "../data/portfolioData";
 import type { ProjectGroupIconKey } from "../data/portfolioData";
+import { portraitImageSrc } from "../data/portfolioData";
 import { ExternalLinkIcon, ProjectGroupIcon } from "../icons";
 
 function iconKey(group: ProjectGroup): ProjectGroupIconKey {
@@ -52,7 +53,7 @@ export function ProjectSections({ groups }: { groups: ProjectGroup[] }) {
                         referrerPolicy="no-referrer"
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                         onError={(e) => {
-                          e.currentTarget.src = "/images/picture.jpg";
+                          e.currentTarget.src = portraitImageSrc;
                         }}
                       />
                       <span className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-page/45 via-transparent to-cyan-500/10" />
