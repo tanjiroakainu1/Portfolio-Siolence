@@ -103,7 +103,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
       hidden={hidden}
     >
       <div
-        className="relative z-[1] mx-auto w-full max-w-layout flex-1 px-[max(0.75rem,min(1.5rem,4vw))] py-[clamp(1rem,3.5vw,2rem)] pb-[max(5.5rem,min(7rem,12vw))] pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))] sm:px-[clamp(1rem,4vw,1.5rem)] sm:pb-[max(6rem,min(7.5rem,10vw))]"
+        className={`relative mx-auto w-full max-w-layout flex-1 px-[max(0.75rem,min(1.5rem,4vw))] py-[clamp(1rem,3.5vw,2rem)] pb-[max(5.5rem,min(7rem,12vw))] pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))] sm:px-[clamp(1rem,4vw,1.5rem)] sm:pb-[max(6rem,min(7.5rem,10vw))] ${open ? "z-0" : "z-[1]"}`}
       >
         <header className="mb-[clamp(1.35rem,4.2vw,2.25rem)] border-b border-cyan-500/15 pb-[clamp(1.1rem,3.2vw,1.65rem)] text-center sm:text-left">
           <p className="m-0 text-[clamp(0.62rem,1.8vw,0.68rem)] font-semibold uppercase tracking-[0.18em] text-cyan-200/85 sm:tracking-[0.2em]">
@@ -176,7 +176,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
         </div>
 
         <div
-          className="grid grid-cols-1 gap-[clamp(0.75rem,2.4vw,1.25rem)] min-[420px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1400px]:grid-cols-4"
+          className="grid w-full min-w-0 grid-cols-1 gap-[clamp(0.75rem,2.4vw,1.25rem)] min-[420px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1400px]:grid-cols-4"
           aria-label="Project showcase gallery"
         >
           {projectShowcaseImages.map((item, i) => (
@@ -216,21 +216,21 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
       {open && current ? (
         <>
           <div
-            className="fixed inset-0 z-0 cursor-pointer bg-[#020617]/96 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md"
+            className="fixed inset-0 z-[100] cursor-pointer bg-[#020617]/96 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md"
             aria-hidden
             onClick={onBackdropPointerUp}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           />
           <div
-            className="fixed inset-0 z-[1] flex flex-col items-center justify-center pointer-events-none px-[max(0.35rem,env(safe-area-inset-left,0px))] pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] pr-[max(0.35rem,env(safe-area-inset-right,0px))] pt-[max(0.65rem,env(safe-area-inset-top,0px))] min-[400px]:px-3 min-[400px]:pb-4 min-[400px]:pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:px-6 sm:pb-6 sm:pt-4"
+            className="fixed inset-0 z-[110] flex max-h-[100dvh] flex-col items-center justify-center overflow-y-auto overflow-x-hidden overscroll-contain pointer-events-none px-[max(0.35rem,env(safe-area-inset-left,0px))] pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] pr-[max(0.35rem,env(safe-area-inset-right,0px))] pt-[max(0.65rem,env(safe-area-inset-top,0px))] min-[400px]:px-3 min-[400px]:pb-4 min-[400px]:pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:px-6 sm:pb-6 sm:pt-4"
             role="dialog"
             aria-modal="true"
             aria-label="Fullscreen project image"
           >
             <button
               type="button"
-              className="pointer-events-auto absolute left-[max(0.5rem,env(safe-area-inset-left,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[2] flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-2.5 text-[0.8rem] font-semibold text-slate-200 shadow-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 min-[380px]:justify-start min-[380px]:px-3.5 sm:left-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(0.75rem,env(safe-area-inset-top))] sm:px-4 sm:text-[0.85rem]"
+              className="pointer-events-auto absolute left-[max(0.5rem,env(safe-area-inset-left,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-2.5 text-[0.8rem] font-semibold text-slate-200 shadow-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 min-[380px]:justify-start min-[380px]:px-3.5 sm:left-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(0.75rem,env(safe-area-inset-top))] sm:px-4 sm:text-[0.85rem]"
               onClick={closeLightbox}
               aria-label="Back to project gallery"
             >
@@ -242,7 +242,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
 
             <button
               type="button"
-              className="pointer-events-auto absolute right-[max(0.5rem,env(safe-area-inset-right,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[2] flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-slate-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 sm:right-[max(0.75rem,env(safe-area-inset-right))] sm:top-[max(0.75rem,env(safe-area-inset-top))]"
+              className="pointer-events-auto absolute right-[max(0.5rem,env(safe-area-inset-right,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-slate-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 sm:right-[max(0.75rem,env(safe-area-inset-right))] sm:top-[max(0.75rem,env(safe-area-inset-top))]"
               onClick={closeLightbox}
               aria-label="Close gallery"
             >
@@ -252,11 +252,11 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
             </button>
 
             <div
-              className="pointer-events-auto flex w-full max-w-[min(100%,72rem)] min-h-0 max-h-[min(100dvh-0.5rem,100svh)] flex-col items-stretch justify-center min-[400px]:max-h-[min(92dvh,calc(100svh-4.5rem))] sm:max-h-[min(90dvh,calc(100vh-5rem))]"
+              className="pointer-events-auto my-auto flex w-full min-w-0 max-w-[min(100vw-0.5rem,72rem)] shrink-0 flex-col items-stretch justify-center py-2 sm:py-4"
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >
-              <div className="flex min-h-0 w-full flex-1 flex-col items-stretch justify-center gap-2 min-[520px]:flex-row min-[520px]:items-center min-[520px]:gap-1 sm:gap-2">
+              <div className="flex min-h-0 w-full min-w-0 flex-col items-stretch justify-center gap-2 min-[520px]:min-h-[min(70dvh,32rem)] min-[520px]:flex-row min-[520px]:items-center min-[520px]:gap-1 sm:gap-2">
                 <button
                   type="button"
                   onClick={goPrev}
@@ -270,11 +270,11 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                   <span className="ml-1 text-xs font-medium min-[520px]:sr-only">Previous</span>
                 </button>
 
-                <div className="order-1 flex min-h-0 min-w-0 flex-1 items-center justify-center px-0.5 min-[520px]:order-2 min-[520px]:px-1">
+                <div className="order-1 flex min-h-0 min-w-0 flex-1 items-center justify-center overflow-hidden px-0.5 min-[520px]:order-2 min-[520px]:px-1">
                   <img
                     src={current.src}
                     alt={current.alt}
-                    className="max-h-[min(58dvh,65svh)] w-auto max-w-full object-contain object-center shadow-2xl ring-1 ring-white/10 min-[400px]:max-h-[min(68dvh,78svh)] min-[520px]:max-h-[min(78dvh,88vh)] sm:max-h-[min(82dvh,88vh)]"
+                    className="max-h-[min(50dvh,420px)] w-auto max-w-full object-contain object-center shadow-2xl ring-1 ring-white/10 min-[400px]:max-h-[min(58dvh,520px)] min-[520px]:max-h-[min(72dvh,calc(100dvh-10rem))] sm:max-h-[min(78dvh,calc(100dvh-9rem))]"
                     width={1600}
                     height={1000}
                     sizes="100vw"

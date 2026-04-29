@@ -177,6 +177,21 @@ export const projectGroups: ProjectGroup[] = [
     ],
   },
   {
+    title: "Rental, e-voting & mobile releases",
+    icon: "building",
+    items: [
+      { label: "E-Voting System AI", href: "https://evoting-system-ai0.vercel.app/" },
+      { label: "Sales & Inventory AI (APK — Google Drive)", href: "https://tinyurl.com/2p2d76mx" },
+      { label: "Event Venue Rental System", href: "https://event-venue-rental-system.vercel.app/" },
+      {
+        label: "Hotel Rental App (APK — Google Drive)",
+        href: "https://drive.google.com/drive/folders/1SB37yUhb2avisPWcPbiI1yQ1rpPi-42i",
+      },
+      { label: "House Rental AI", href: "https://house-rental-ai.vercel.app/" },
+      { label: "Drive Ease AI", href: "https://drive-ease-ai.vercel.app/" },
+    ],
+  },
+  {
     title: "Management & public systems",
     icon: "building",
     items: [
