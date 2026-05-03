@@ -12,6 +12,7 @@ import {
   type RefObject,
 } from "react";
 import { assistant, profile, youtubeChannel } from "../data/portfolioData";
+import { formatAssistantReply } from "../lib/formatAssistantReply";
 import { buildSystemPrompt } from "../lib/systemPrompt";
 
 export type BubbleRole = "user" | "assistant" | "system";
@@ -22,22 +23,10 @@ export interface ChatLine {
   content: string;
 }
 
-export const CHAT_MODEL = "openai/gpt-4o-mini";
+const CHAT_MODEL = "openai/gpt-4o-mini";
 
 function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
-
-export function formatAssistantReply(raw: string): string {
-  const normalized = raw.replace(/\r\n/g, "\n").trim();
-  if (!normalized) return "";
-  if (!normalized.includes("\n")) {
-    const hasManyItems = (normalized.match(/\b\d+\.\s/g) ?? []).length >= 2;
-    if (hasManyItems) {
-      return normalized.replace(/\s+(\d+\.\s)/g, "\n$1").trim();
-    }
-  }
-  return normalized;
 }
 
 function buildWelcome(): string {

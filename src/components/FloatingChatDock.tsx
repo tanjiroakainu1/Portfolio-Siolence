@@ -158,7 +158,7 @@ export function FloatingChatDock({
           <button
             type="button"
             onClick={() => setPanelOpen(true)}
-            className="group inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2 rounded-full border border-ion/40 bg-gradient-to-br from-violet-600/35 to-cyan-600/25 px-4 py-3 text-violet-100 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_40px_rgba(139,92,246,0.25),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-[transform,box-shadow,border-color] hover:-translate-y-0.5 hover:border-ion/55 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5),0_0_48px_rgba(139,92,246,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion/70 active:translate-y-0 sm:min-h-[56px] sm:min-w-0 sm:px-5"
+            className="group inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2 rounded-full border border-cyan-400/35 bg-gradient-to-br from-cyan-500/28 via-violet-600/22 to-cyan-600/18 px-4 py-3 text-cyan-50 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_40px_rgba(34,211,238,0.2),0_0_28px_rgba(139,92,246,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-[transform,box-shadow,border-color] hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5),0_0_48px_rgba(34,211,238,0.28),0_0_36px_rgba(139,92,246,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 active:translate-y-0 sm:min-h-[56px] sm:min-w-0 sm:px-5"
             aria-label={`Open ${assistant.name} quick chat`}
             aria-expanded={false}
           >
@@ -166,10 +166,10 @@ export function FloatingChatDock({
               <NavChatIcon className="block h-[1.1rem] w-[1.1rem]" />
             </span>
             <span className="hidden max-w-[10rem] flex-col items-start pr-0.5 text-left sm:flex">
-              <span className="text-[0.72rem] font-bold uppercase tracking-[0.12em] text-violet-100/95">
+              <span className="text-[0.72rem] font-bold uppercase tracking-[0.12em] text-cyan-100/95">
                 {assistant.name}
               </span>
-              <span className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-violet-200/75">
+              <span className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-slate-200/85">
                 {assistant.navSubtitle}
               </span>
             </span>

@@ -44,11 +44,12 @@ export const profile: Profile = {
   name: "Raminder Jangao",
   title: "Full-stack developer",
   year: "2026",
-  tagline: "Web, mobile, games, and AI experiences crafted from concept to production-ready systems.",
+  tagline:
+    "Web, mobile, games, and AI—designed and engineered end to end, from first idea to production-ready release.",
   intro:
-    "I design and deliver full-stack software with clear communication, thoughtful architecture, and flexible scope. Expect transparent pricing, student-friendly options, and demos you can confidently share.",
+    "I design and ship full-stack software with steady communication, thoughtful architecture, and scope that adapts to your goals. Pricing stays transparent, student-friendly options are on the table, and you get demos you're happy to put in front of clients or classmates.",
   introClosing:
-    "When you message me, you talk directly with the builder behind the product, not an automated responder.",
+    "When you reach out, you're talking to the person who builds the product—not a ticket queue, sales script, or generic autoresponder.",
   storyLead: "Solution-Driven System Stories",
   developmentStories: [
     {
@@ -78,7 +79,7 @@ export const profile: Profile = {
   ],
   chipsLabel: "At a glance",
   cta:
-    "Ready to build something real? Share your concept, goals, or budget and I will handle frontend, backend, databases, and APIs with iterative delivery until it feels exactly right.",
+    "Ready to build something real? Send your concept, goals, or budget. I’ll take care of frontend, backend, databases, and APIs—shipping in iterations until the product feels right in your hands.",
 };
 
 export type SkillIconKey =
