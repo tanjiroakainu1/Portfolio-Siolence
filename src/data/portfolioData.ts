@@ -108,6 +108,10 @@ export const skills: SkillRow[] = [
   { text: "Docker · Kubernetes", icon: "infra" },
   { text: "Python (Flask, Django) · PHP (native, Laravel)", icon: "backend" },
   {
+    text: "ASP.NET Core · C# · .NET · Web API · MVC · Blazor · Razor Pages",
+    icon: "dotnet",
+  },
+  {
     text: "Vue · Svelte · React · Angular · TypeScript · JavaScript",
     icon: "frontend",
   },
@@ -117,8 +121,7 @@ export const skills: SkillRow[] = [
     icon: "frontend",
   },
   { text: "Flutter · Dart (web & mobile)", icon: "flutter" },
-  { text: "Java, Kotlin, Swift · Android APK", icon: "native" },
-  { text: "C# · JavaFX", icon: "dotnet" },
+  { text: "Java, Kotlin, Swift · Android APK · JavaFX", icon: "native" },
   {
     text: "MySQL · MongoDB · SQLite · PostgreSQL · Supabase · Firebase",
     icon: "database",
@@ -190,6 +193,14 @@ export const projectGroups: ProjectGroup[] = [
       },
       { label: "House Rental AI", href: "https://house-rental-ai.vercel.app/" },
       { label: "Drive Ease AI", href: "https://drive-ease-ai.vercel.app/" },
+    ],
+  },
+  {
+    title: "Commerce, cafe & storefronts",
+    icon: "globe",
+    items: [
+      { label: "Daily Grind — Coffee Shop", href: "https://daily-grind-ai.vercel.app/" },
+      { label: "UrbanNest — E-commerce", href: "https://urban-nes-ai.vercel.app/" },
     ],
   },
   {

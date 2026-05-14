@@ -13,6 +13,7 @@ import {
 } from "react";
 import { assistant, profile, youtubeChannel } from "../data/portfolioData";
 import { formatAssistantReply } from "../lib/formatAssistantReply";
+import { formatChatApiError } from "../lib/formatChatApiError";
 import { buildSystemPrompt } from "../lib/systemPrompt";
 
 export type BubbleRole = "user" | "assistant" | "system";
@@ -113,7 +114,7 @@ export function ChatSessionProvider({ children }: { children: React.ReactNode })
         const data = (await res.json().catch(() => ({}))) as { error?: string; text?: string };
         if (!res.ok) {
           const err = data.error ?? res.statusText ?? "Request failed";
-          setLines((prev) => [...prev, { id: uid(), role: "system", content: String(err) }]);
+          setLines((prev) => [...prev, { id: uid(), role: "system", content: formatChatApiError(err) }]);
           threadRef.current.pop();
           return;
         }

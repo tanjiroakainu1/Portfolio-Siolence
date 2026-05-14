@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from "react";
 import { profile, skills, social, stackSectionTitle } from "../data/portfolioData";
 import { projectShowcaseImages } from "../data/projectShowcaseImages";
-import { showcaseTechLead } from "../data/projectShowcaseTech";
+import { showcaseTechLead, projectShowcaseFacebookPosts } from "../data/projectShowcaseTech";
 import { SocialIcon } from "../icons";
 import { StackTechPanel } from "./StackTechPanel";
 
 const SWIPE_MIN_PX = 48;
 
 const showcaseFacebookLinks = social.filter((s) => s.network === "facebook");
+
+const showcaseFacebookGridLinks = [...showcaseFacebookLinks, ...projectShowcaseFacebookPosts];
 
 const TRANSACTION_RECEIPTS_HREF = "https://www.facebook.com/share/p/1CqytMvtyU/";
 const TRANSACTION_RECEIPTS_LABEL =
@@ -133,8 +135,8 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
             Facebook and receipts
           </p>
 
-          <ul className="m-0 mt-4 grid list-none grid-cols-1 gap-3 p-0 sm:mt-5 sm:grid-cols-3 sm:gap-3">
-            {showcaseFacebookLinks.map((link, index) => (
+          <ul className="m-0 mt-4 grid list-none grid-cols-1 gap-3 p-0 sm:mt-5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+            {showcaseFacebookGridLinks.map((link, index) => (
               <li key={link.href} className="min-w-0">
                 <a
                   href={link.href}
@@ -150,7 +152,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                     <SocialIcon network="facebook" className="block h-7 w-7" />
                   </span>
                   <span className="text-[clamp(0.85rem,2.2vw,0.95rem)] font-semibold leading-tight tracking-tight text-slate-50">
-                    {profile.name}
+                    {"network" in link && link.network === "facebook" ? profile.name : link.label}
                   </span>
                 </a>
               </li>

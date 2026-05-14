@@ -11,6 +11,15 @@ const app = express();
 const PORT = Number(process.env.PORT) || 8787;
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
+/** Cap completion length so OpenRouter does not reserve huge max_tokens (fixes low-credit / free-tier errors). */
+function resolveMaxTokens() {
+  const fromEnv = Number(process.env.OPENROUTER_MAX_TOKENS);
+  if (Number.isFinite(fromEnv) && fromEnv > 0) {
+    return Math.min(8192, Math.max(256, Math.floor(fromEnv)));
+  }
+  return 2048;
+}
+
 app.use(cors({ origin: true }));
 app.use(express.json({ limit: "256kb" }));
 
@@ -30,6 +39,7 @@ app.post("/api/chat", async (req, res) => {
   const body = {
     model: model || "openai/gpt-4o-mini",
     messages,
+    max_tokens: resolveMaxTokens(),
   };
 
   try {
