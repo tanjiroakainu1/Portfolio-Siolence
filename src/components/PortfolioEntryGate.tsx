@@ -285,12 +285,27 @@ export function PortfolioEntryGate() {
           <span className="portfolio-entry-screen__label-dot" aria-hidden />
         </p>
         <div className="portfolio-entry-screen__stage">
-          <EntryEnvelope
-            onUnlock={handleUnlock}
-            unlocking={flapTriggered || loading}
-            navShake={navShake}
-          />
-          <ExpertiseCoverageChart className="portfolio-entry-screen__charts" />
+          <div className="portfolio-entry-screen__envelope-col">
+            <EntryEnvelope
+              onUnlock={handleUnlock}
+              unlocking={flapTriggered || loading}
+              navShake={navShake}
+            />
+          </div>
+
+          <span className="portfolio-entry-screen__connector" aria-hidden>
+            <span className="portfolio-entry-screen__connector-dot" />
+            <span className="portfolio-entry-screen__connector-line" />
+            <span className="portfolio-entry-screen__connector-dot" />
+          </span>
+
+          <div className="portfolio-entry-screen__charts-col">
+            <p className="portfolio-entry-screen__charts-hint" aria-hidden>
+              <span>Stack clearance</span>
+              <span className="portfolio-entry-screen__charts-hint-arrow">↓</span>
+            </p>
+            <ExpertiseCoverageChart variant="gate" className="portfolio-entry-screen__charts" />
+          </div>
         </div>
       </div>
 

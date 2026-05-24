@@ -65,6 +65,7 @@ export const portfolioEnvelope = {
   classified: "Classified · Mystery clearance",
   coverageTitle: "Language coverage radar",
   navLockHint: "Unlock mysteries to access navigation",
+  navLockHintShort: "Mysteries locked",
   firstEntryLabel: "First entry",
   firstEntryAria: "Return to portfolio first entry gate",
 } as const;

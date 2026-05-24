@@ -58,7 +58,7 @@ export function ExpertiseCoverageChart({
 
   return (
     <section
-      className={`expertise-coverage ${variant === "embedded" ? "expertise-coverage--embedded" : ""} ${className}`.trim()}
+      className={`expertise-coverage ${variant === "embedded" ? "expertise-coverage--embedded" : ""} ${variant === "gate" ? "expertise-coverage--gate" : ""} ${className}`.trim()}
       aria-label={portfolioEnvelope.coverageTitle}
     >
       <header className="expertise-coverage__head">

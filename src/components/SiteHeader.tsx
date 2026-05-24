@@ -115,9 +115,10 @@ export function SiteHeader({
           aria-describedby={navLocked ? "site-nav-lock-hint" : undefined}
         >
           {navLocked ? (
-            <p id="site-nav-lock-hint" className="site-nav__lock-hint">
+            <p id="site-nav-lock-hint" className="site-nav__lock-hint" title={lockedTitle}>
               <LockedNavIcon />
-              {lockedTitle}
+              <span className="site-nav__lock-hint-text site-nav__lock-hint-text--long">{lockedTitle}</span>
+              <span className="site-nav__lock-hint-text site-nav__lock-hint-text--short">{portfolioEnvelope.navLockHintShort}</span>
             </p>
           ) : null}
           <ul className="m-0 flex list-none flex-wrap items-center justify-end gap-[0.45rem] p-0">
