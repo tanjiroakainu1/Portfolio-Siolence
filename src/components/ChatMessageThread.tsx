@@ -10,7 +10,7 @@ function assistantLineClass(row: string): string {
   if (!t) return "text-slate-400/75";
   if (/^\d+\.\s/.test(t)) return "font-medium text-violet-200/95";
   if (/^[-*•]\s/.test(t)) return "font-medium text-emerald-200/95";
-  if (/^(#{1,3}\s|Note:|Tip:|Warning:)/i.test(t)) return "font-semibold text-cyan-200/95";
+  if (/^(#{1,3}\s|Note:|Tip:|Warning:)/i.test(t)) return "font-semibold text-fuchsia-200/95";
   return "text-slate-100/[0.94]";
 }
 
@@ -29,15 +29,15 @@ function FormattedAssistantText({ text }: { text: string }) {
 }
 
 const assistantBubbleShell =
-  "relative min-w-0 max-w-[min(100%,calc(100%-3rem))] overflow-hidden rounded-2xl rounded-tl-sm border border-cyan-400/28 bg-gradient-to-br from-violet-600/[0.18] from-[0%] via-[#101d32]/96 via-[45%] to-cyan-600/[0.14] to-[100%] px-3 py-2 leading-relaxed shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_6px_28px_rgba(0,0,0,0.35),0_0_36px_rgba(139,92,246,0.12),0_0_24px_rgba(34,211,238,0.08)] ring-1 ring-violet-400/15 [overflow-wrap:anywhere]";
+  "relative min-w-0 max-w-[min(100%,calc(100%-3rem))] overflow-hidden rounded-2xl rounded-tl-sm border border-fuchsia-400/28 bg-gradient-to-br from-violet-600/[0.18] from-[0%] via-[#1e1038]/96 via-[45%] to-fuchsia-600/[0.14] to-[100%] px-3 py-2 leading-relaxed shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_6px_28px_rgba(0,0,0,0.35),0_0_36px_rgba(139,92,246,0.12),0_0_24px_rgba(232,121,249,0.08)] ring-1 ring-violet-400/15 [overflow-wrap:anywhere]";
 
 const assistantBubbleSheen =
-  "pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(125deg,rgba(34,211,238,0.12)_0%,transparent_38%,transparent_62%,rgba(167,139,250,0.1)_100%)] opacity-90";
+  "pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(125deg,rgba(232,121,249,0.12)_0%,transparent_38%,transparent_62%,rgba(167,139,250,0.1)_100%)] opacity-90";
 
 export function TypingDots() {
   return (
     <span className="inline-flex gap-1.5 py-0.5" aria-hidden>
-      <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-cyan-400/85 [animation-delay:0ms]" />
+      <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-fuchsia-400/85 [animation-delay:0ms]" />
       <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-violet-400/85 [animation-delay:150ms]" />
       <span className="h-1.5 w-1.5 animate-typing-bounce rounded-full bg-emerald-400/80 [animation-delay:300ms]" />
     </span>
@@ -68,7 +68,7 @@ export function ChatMessageThread({
       }`}
       style={{
         background:
-          "linear-gradient(180deg, rgba(34,211,238,0.07) 0%, transparent 36%), radial-gradient(ellipse 85% 55% at 100% 0%, rgba(139,92,246,0.11), transparent 52%), radial-gradient(ellipse 60% 40% at 0% 100%, rgba(16,185,129,0.06), transparent 50%), #0a1220",
+          "linear-gradient(180deg, rgba(232,121,249,0.07) 0%, transparent 36%), radial-gradient(ellipse 85% 55% at 100% 0%, rgba(139,92,246,0.11), transparent 52%), radial-gradient(ellipse 60% 40% at 0% 100%, rgba(16,185,129,0.06), transparent 50%), #1a0a2e",
       }}
       role="log"
       aria-live="polite"
@@ -88,13 +88,13 @@ export function ChatMessageThread({
           return (
             <div key={line.id} className="flex w-full flex-row-reverse items-start gap-2 sm:gap-2.5">
               <span
-                className={`${AVATAR_MSG} mt-0.5 flex items-center justify-center rounded-full border border-cyan-400/35 bg-cyan-500/15 text-[0.55rem] font-bold uppercase tracking-wider text-bolt sm:text-[0.6rem]`}
+                className={`${AVATAR_MSG} mt-0.5 flex items-center justify-center rounded-full border border-fuchsia-400/35 bg-fuchsia-500/15 text-[0.55rem] font-bold uppercase tracking-wider text-bolt sm:text-[0.6rem]`}
                 aria-hidden
               >
                 You
               </span>
               <div
-                className={`min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tr-sm bg-gradient-to-br from-cyan-600/22 to-violet-600/18 px-3 py-2 leading-relaxed text-slate-100 shadow-sm ring-1 ring-cyan-400/25 [overflow-wrap:anywhere] ${bubbleUser}`}
+                className={`min-w-0 max-w-[min(100%,calc(100%-3rem))] whitespace-pre-wrap rounded-2xl rounded-tr-sm bg-gradient-to-br from-fuchsia-600/22 to-violet-600/18 px-3 py-2 leading-relaxed text-slate-100 shadow-sm ring-1 ring-fuchsia-400/25 [overflow-wrap:anywhere] ${bubbleUser}`}
               >
                 {line.content}
               </div>
@@ -104,7 +104,7 @@ export function ChatMessageThread({
         return (
           <div key={line.id} className="flex w-full items-start gap-2 sm:gap-2.5">
             <img
-              className={`${AVATAR_MSG} mt-0.5 rounded-full border border-cyan-400/35 bg-surface-2 object-cover shadow-[0_0_22px_rgba(34,211,238,0.22)] ring-2 ring-violet-400/25`}
+              className={`${AVATAR_MSG} mt-0.5 rounded-full border border-fuchsia-400/35 bg-surface-2 object-cover shadow-[0_0_22px_rgba(232,121,249,0.22)] ring-2 ring-violet-400/25`}
               src={assistant.avatarSrc}
               alt=""
               width={36}
@@ -125,7 +125,7 @@ export function ChatMessageThread({
       {loading ? (
         <div className="flex w-full items-start gap-2 sm:gap-2.5">
           <img
-            className={`${AVATAR_MSG} mt-0.5 rounded-full border border-cyan-400/35 bg-surface-2 object-cover shadow-[0_0_22px_rgba(34,211,238,0.22)] ring-2 ring-violet-400/25`}
+            className={`${AVATAR_MSG} mt-0.5 rounded-full border border-fuchsia-400/35 bg-surface-2 object-cover shadow-[0_0_22px_rgba(232,121,249,0.22)] ring-2 ring-violet-400/25`}
             src={assistant.avatarSrc}
             alt=""
             width={36}

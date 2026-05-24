@@ -3,6 +3,7 @@ import { profile, skills, social, stackSectionTitle } from "../data/portfolioDat
 import { projectShowcaseImages } from "../data/projectShowcaseImages";
 import { showcaseTechLead, projectShowcaseFacebookPosts } from "../data/projectShowcaseTech";
 import { SocialIcon } from "../icons";
+import { ExpertiseCoverageChart } from "./ExpertiseCoverageChart";
 import { StackTechPanel } from "./StackTechPanel";
 
 const SWIPE_MIN_PX = 48;
@@ -107,31 +108,36 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
       <div
         className={`relative mx-auto w-full max-w-layout flex-1 px-[max(0.75rem,min(1.5rem,4vw))] py-[clamp(1rem,3.5vw,2rem)] pb-[max(5.5rem,min(7rem,12vw))] pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))] sm:px-[clamp(1rem,4vw,1.5rem)] sm:pb-[max(6rem,min(7.5rem,10vw))] ${open ? "z-0" : "z-[1]"}`}
       >
-        <header className="mb-[clamp(1.35rem,4.2vw,2.25rem)] border-b border-cyan-500/15 pb-[clamp(1.1rem,3.2vw,1.65rem)] text-center sm:text-left">
-          <p className="m-0 text-[clamp(0.62rem,1.8vw,0.68rem)] font-semibold uppercase tracking-[0.18em] text-cyan-200/85 sm:tracking-[0.2em]">
+        <header className="showcase-hero mb-[clamp(1.35rem,4.2vw,2.25rem)] border-b border-fuchsia-500/15 pb-[clamp(1.1rem,3.2vw,1.65rem)] text-center sm:text-left">
+          <p className="showcase-hero__kicker m-0">
+            <span className="showcase-hero__kicker-dot" aria-hidden />
             {profile.name}
+            <span className="showcase-hero__kicker-dot" aria-hidden />
           </p>
-          <h1 className="mt-2 bg-gradient-to-br from-white via-cyan-100 to-violet-200 bg-clip-text text-[clamp(1.2rem,4.5vw,1.85rem)] font-bold tracking-tight text-transparent">
+          <h1 className="showcase-hero__title mt-2 bg-gradient-to-br from-white via-fuchsia-100 to-violet-200 bg-clip-text text-[clamp(1.2rem,4.5vw,1.85rem)] font-bold tracking-tight text-transparent">
             Project showcase
           </h1>
-          <p className="mx-auto mt-3 max-w-[min(100%,40rem)] text-[clamp(0.8rem,2.2vw,0.92rem)] leading-relaxed text-slate-400 sm:mx-0 lg:max-w-[42rem]">
+          <p className="showcase-hero__lead mx-auto mt-3 max-w-[min(100%,40rem)] text-[clamp(0.8rem,2.2vw,0.92rem)] leading-relaxed text-slate-400 sm:mx-0 lg:max-w-[42rem]">
             {showcaseTechLead}
           </p>
 
-          <StackTechPanel
-            rows={skills}
-            eyebrow={stackSectionTitle}
-            className="mx-auto mt-4 w-full max-w-[min(100%,40rem)] sm:mx-0 sm:mt-5 lg:max-w-[42rem]"
-            listAriaLabel={`${stackSectionTitle} — delivered projects`}
-          />
+          <div className="showcase-stack mx-auto mt-5 w-full max-w-[min(100%,72rem)] sm:mx-0">
+            <ExpertiseCoverageChart variant="embedded" className="showcase-stack__charts" />
+            <StackTechPanel
+              rows={skills}
+              eyebrow={stackSectionTitle}
+              className="showcase-stack__list mt-4 sm:mt-5"
+              listAriaLabel={`${stackSectionTitle} — delivered projects`}
+            />
+          </div>
         </header>
 
-        <div className="relative mx-auto mb-[clamp(1.25rem,3.5vw,2rem)] w-full max-w-[min(100%,40rem)] overflow-hidden rounded-[clamp(1rem,2.2vw,1.35rem)] border border-cyan-400/22 bg-gradient-to-b from-surface/55 via-page/40 to-[#060d18]/90 p-[clamp(1rem,2.8vw,1.5rem)] shadow-[0_12px_48px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.07)] ring-1 ring-inset ring-white/[0.06] backdrop-blur-md sm:mx-0 sm:p-6 lg:max-w-[42rem]">
+        <div className="relative mx-auto mb-[clamp(1.25rem,3.5vw,2rem)] w-full max-w-[min(100%,40rem)] overflow-hidden rounded-[clamp(1rem,2.2vw,1.35rem)] border border-fuchsia-400/22 bg-gradient-to-b from-surface/55 via-page/40 to-[#120620]/90 p-[clamp(1rem,2.8vw,1.5rem)] shadow-[0_12px_48px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.07)] ring-1 ring-inset ring-white/[0.06] backdrop-blur-md sm:mx-0 sm:p-6 lg:max-w-[42rem]">
           <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-fuchsia-400/35 to-transparent"
             aria-hidden
           />
-          <p className="m-0 text-[clamp(0.62rem,1.8vw,0.68rem)] font-semibold uppercase tracking-[0.18em] text-cyan-200/90">
+          <p className="m-0 text-[clamp(0.62rem,1.8vw,0.68rem)] font-semibold uppercase tracking-[0.18em] text-fuchsia-200/90">
             Facebook and receipts
           </p>
 
@@ -143,10 +149,10 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${link.label} (opens in new tab)`}
-                  className="flex h-full min-h-[5.5rem] flex-col items-center justify-center gap-2.5 rounded-2xl border border-white/[0.08] bg-[#0a1220]/75 px-4 py-4 text-center no-underline shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-[border-color,background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#1877F2]/45 hover:bg-[#1877F2]/[0.08] hover:shadow-[0_12px_32px_rgba(0,0,0,0.35),0_0_28px_rgba(24,119,242,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/55 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  className="flex h-full min-h-[5.5rem] flex-col items-center justify-center gap-2.5 rounded-2xl border border-white/[0.08] bg-[#1a0a2e]/75 px-4 py-4 text-center no-underline shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-[border-color,background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#1877F2]/45 hover:bg-[#1877F2]/[0.08] hover:shadow-[0_12px_32px_rgba(0,0,0,0.35),0_0_28px_rgba(24,119,242,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400/55 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                 >
                   <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1877F2]/25 to-[#0c64d4]/10 text-[#1877F2] shadow-[0_4px_16px_rgba(24,119,242,0.2)] ring-1 ring-[#1877F2]/30">
-                    <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-md bg-page/95 px-1 text-[0.55rem] font-bold tabular-nums text-cyan-300 ring-1 ring-cyan-400/25">
+                    <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-md bg-page/95 px-1 text-[0.55rem] font-bold tabular-nums text-fuchsia-300 ring-1 ring-fuchsia-400/25">
                       {index + 1}
                     </span>
                     <SocialIcon network="facebook" className="block h-7 w-7" />
@@ -166,7 +172,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
               rel="noopener noreferrer"
               className="group relative flex min-h-[3.5rem] w-full items-start gap-4 overflow-hidden rounded-2xl border border-emerald-400/28 bg-gradient-to-r from-emerald-500/[0.09] via-transparent to-violet-500/[0.06] px-4 py-4 no-underline shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-[border-color,box-shadow,transform] duration-300 hover:border-emerald-400/45 hover:shadow-[0_0_32px_rgba(52,211,153,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400/55 sm:min-h-[4rem] sm:items-center"
             >
-              <span className="absolute left-0 top-0 h-full w-1 rounded-l-2xl bg-gradient-to-b from-emerald-400/80 to-cyan-400/50 opacity-90" aria-hidden />
+              <span className="absolute left-0 top-0 h-full w-1 rounded-l-2xl bg-gradient-to-b from-emerald-400/80 to-fuchsia-400/50 opacity-90" aria-hidden />
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1877F2]/15 text-[#1877F2] ring-1 ring-[#1877F2]/28">
                 <SocialIcon network="facebook" className="block h-6 w-6" />
               </span>
@@ -186,7 +192,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
               key={item.src}
               type="button"
               onClick={() => setLightboxIndex(i)}
-              className="group relative m-0 block w-full min-w-0 cursor-pointer overflow-hidden rounded-[clamp(0.9rem,2.2vw,1.125rem)] border border-white/[0.09] bg-[#0a1220]/90 p-0 text-left shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] ring-1 ring-cyan-400/[0.07] transition-[border-color,box-shadow,transform,ring-color] duration-300 hover:-translate-y-0.5 hover:border-cyan-400/25 hover:shadow-[0_20px_48px_rgba(0,0,0,0.45),0_0_36px_rgba(34,211,238,0.1),inset_0_1px_0_rgba(255,255,255,0.08)] hover:ring-cyan-400/20 active:translate-y-0 active:scale-[0.995] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/55 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:rounded-2xl"
+              className="group relative m-0 block w-full min-w-0 cursor-pointer overflow-hidden rounded-[clamp(0.9rem,2.2vw,1.125rem)] border border-white/[0.09] bg-[#1a0a2e]/90 p-0 text-left shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] ring-1 ring-fuchsia-400/[0.07] transition-[border-color,box-shadow,transform,ring-color] duration-300 hover:-translate-y-0.5 hover:border-fuchsia-400/25 hover:shadow-[0_20px_48px_rgba(0,0,0,0.45),0_0_36px_rgba(232,121,249,0.1),inset_0_1px_0_rgba(255,255,255,0.08)] hover:ring-fuchsia-400/20 active:translate-y-0 active:scale-[0.995] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400/55 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:rounded-2xl"
               aria-label={`Open screenshot ${i + 1} of ${total} in fullscreen`}
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden min-[480px]:aspect-[16/10]">
@@ -202,11 +208,11 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                   draggable={false}
                 />
                 <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020617]/55 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0518]/55 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100"
                   aria-hidden
                 />
                 <div
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.06] transition-[box-shadow] duration-300 group-hover:shadow-[inset_0_0_0_1px_rgba(34,211,238,0.15)]"
+                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.06] transition-[box-shadow] duration-300 group-hover:shadow-[inset_0_0_0_1px_rgba(232,121,249,0.15)]"
                   aria-hidden
                 />
               </div>
@@ -218,7 +224,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
       {open && current ? (
         <>
           <div
-            className="fixed inset-0 z-[100] cursor-pointer bg-[#020617]/96 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md"
+            className="fixed inset-0 z-[100] cursor-pointer bg-[#0d0518]/96 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md"
             aria-hidden
             onClick={onBackdropPointerUp}
             onTouchStart={onTouchStart}
@@ -232,7 +238,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
           >
             <button
               type="button"
-              className="pointer-events-auto absolute left-[max(0.5rem,env(safe-area-inset-left,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-2.5 text-[0.8rem] font-semibold text-slate-200 shadow-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 min-[380px]:justify-start min-[380px]:px-3.5 sm:left-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(0.75rem,env(safe-area-inset-top))] sm:px-4 sm:text-[0.85rem]"
+              className="pointer-events-auto absolute left-[max(0.5rem,env(safe-area-inset-left,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-2.5 text-[0.8rem] font-semibold text-slate-200 shadow-sm transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400/60 min-[380px]:justify-start min-[380px]:px-3.5 sm:left-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(0.75rem,env(safe-area-inset-top))] sm:px-4 sm:text-[0.85rem]"
               onClick={closeLightbox}
               aria-label="Back to project gallery"
             >
@@ -244,7 +250,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
 
             <button
               type="button"
-              className="pointer-events-auto absolute right-[max(0.5rem,env(safe-area-inset-right,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-slate-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400/60 sm:right-[max(0.75rem,env(safe-area-inset-right))] sm:top-[max(0.75rem,env(safe-area-inset-top))]"
+              className="pointer-events-auto absolute right-[max(0.5rem,env(safe-area-inset-right,0px))] top-[max(0.5rem,env(safe-area-inset-top,0px))] z-[120] flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-slate-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400/60 sm:right-[max(0.75rem,env(safe-area-inset-right))] sm:top-[max(0.75rem,env(safe-area-inset-top))]"
               onClick={closeLightbox}
               aria-label="Close gallery"
             >
@@ -263,7 +269,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                   type="button"
                   onClick={goPrev}
                   disabled={!canPrev}
-                  className="order-2 flex min-h-[44px] w-full shrink-0 items-center justify-center rounded-xl border border-cyan-400/25 bg-surface/80 py-2 text-cyan-200 shadow-sm transition-colors hover:enabled:bg-cyan-500/15 disabled:cursor-not-allowed disabled:opacity-35 min-[520px]:order-1 min-[520px]:h-12 min-[520px]:w-11 min-[520px]:min-w-[44px] min-[520px]:max-w-[3rem] sm:h-12 sm:w-12"
+                  className="order-2 flex min-h-[44px] w-full shrink-0 items-center justify-center rounded-xl border border-fuchsia-400/25 bg-surface/80 py-2 text-fuchsia-200 shadow-sm transition-colors hover:enabled:bg-fuchsia-500/15 disabled:cursor-not-allowed disabled:opacity-35 min-[520px]:order-1 min-[520px]:h-12 min-[520px]:w-11 min-[520px]:min-w-[44px] min-[520px]:max-w-[3rem] sm:h-12 sm:w-12"
                   aria-label="Previous image"
                 >
                   <span className="text-xl font-light min-[520px]:text-lg" aria-hidden>
@@ -289,7 +295,7 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
                   type="button"
                   onClick={goNext}
                   disabled={!canNext}
-                  className="order-3 flex min-h-[44px] w-full shrink-0 items-center justify-center rounded-xl border border-cyan-400/25 bg-surface/80 py-2 text-cyan-200 shadow-sm transition-colors hover:enabled:bg-cyan-500/15 disabled:cursor-not-allowed disabled:opacity-35 min-[520px]:h-12 min-[520px]:w-11 min-[520px]:min-w-[44px] min-[520px]:max-w-[3rem] sm:h-12 sm:w-12"
+                  className="order-3 flex min-h-[44px] w-full shrink-0 items-center justify-center rounded-xl border border-fuchsia-400/25 bg-surface/80 py-2 text-fuchsia-200 shadow-sm transition-colors hover:enabled:bg-fuchsia-500/15 disabled:cursor-not-allowed disabled:opacity-35 min-[520px]:h-12 min-[520px]:w-11 min-[520px]:min-w-[44px] min-[520px]:max-w-[3rem] sm:h-12 sm:w-12"
                   aria-label="Next image"
                 >
                   <span className="mr-1 text-xs font-medium min-[520px]:sr-only">Next</span>

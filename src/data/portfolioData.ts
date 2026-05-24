@@ -40,6 +40,35 @@ export interface Profile {
   cta: string;
 }
 
+/** Copy for the portfolio first-entry gate (envelope screen — not nav redirect loader). */
+export const portfolioEnvelope = {
+  screenLabel: "◈ Portfolio first entry ◈",
+  entryBadge: "FIRST ENTRY · GALAXY GATE",
+  eyebrow: "✦ Galaxy mail · Mystery clearance ✦",
+  role: "FULLSTACK DEVELOPER",
+  unlockLabel: "Unlock Mysteries",
+  unlockHint: "8-second nebula boot · then full galaxy access",
+  unlockAria: "Unlock galaxy mysteries and load portfolio workspace",
+  stuckNote: "This screen appears when you open Portfolio — unlock mysteries once per session.",
+  loadingDurationMs: 8000,
+  loadingTitle: "Booting mystery workspace",
+  loadingComplete: "Mysteries unlocked — welcome to the portfolio.",
+  loadingSteps: [
+    "Scanning encrypted nebula vault…",
+    "Decrypting galaxy mystery cache…",
+    "Hydrating stack & project matrix…",
+    "Linking SIOLENCE assistant…",
+    "Rendering full-stack home…",
+  ],
+  stamp: "2026",
+  postmark: "RJ",
+  classified: "Classified · Mystery clearance",
+  coverageTitle: "Language coverage radar",
+  navLockHint: "Unlock mysteries to access navigation",
+  firstEntryLabel: "First entry",
+  firstEntryAria: "Return to portfolio first entry gate",
+} as const;
+
 export const profile: Profile = {
   name: "Raminder Jangao",
   title: "Full-stack developer",
@@ -95,6 +124,29 @@ export type SkillIconKey =
   | "tools"
   | "os"
   | "code";
+
+export interface ExpertiseCoverageItem {
+  label: string;
+  icon: SkillIconKey;
+  coverage: number;
+  tags: string;
+}
+
+/** Entry-gate expertise bars + radar (icons only — no external chart lib). */
+export const expertiseCoverage: ExpertiseCoverageItem[] = [
+  { label: "Python · PHP", icon: "backend", coverage: 96, tags: "Flask · Django · Laravel · Native" },
+  { label: "Vue · React · Angular", icon: "frontend", coverage: 95, tags: "TS · JS · Next.js · Svelte" },
+  { label: "TypeScript · JavaScript", icon: "code", coverage: 94, tags: "Full-stack JS ecosystem" },
+  { label: ".NET · C# · ASP.NET", icon: "dotnet", coverage: 90, tags: "Web API · MVC · Blazor · GUI" },
+  { label: "React Native · Expo", icon: "mobile", coverage: 92, tags: "APK · Node · Laravel · Python" },
+  { label: "Flutter · Dart", icon: "flutter", coverage: 88, tags: "Web & mobile · Firebase" },
+  { label: "Java · Kotlin · Swift", icon: "native", coverage: 86, tags: "Android APK · JavaFX" },
+  { label: "SQL · NoSQL · Cloud DB", icon: "database", coverage: 93, tags: "MySQL · MongoDB · Supabase · Prisma" },
+  { label: "CSS Frameworks", icon: "styles", coverage: 91, tags: "Tailwind · Bootstrap · Bulma" },
+  { label: "Git · Scripting", icon: "tools", coverage: 82, tags: "Git · Ruby · Perl · Lua" },
+  { label: "Windows · macOS", icon: "os", coverage: 95, tags: "Cross-platform builds" },
+  { label: "Docker · DevOps", icon: "infra", coverage: 78, tags: "Kubernetes · deploy pipelines" },
+];
 
 export interface SkillRow {
   text: string;
@@ -154,7 +206,7 @@ export interface ProjectGroup {
 
 /** Shown on header navigation transition overlay (Portfolio / Project / Chat). */
 export const headerNavWelcome = {
-  eyebrow: "Studio welcome",
+  eyebrow: "◈ Galaxy studio handoff ◈",
   title: "Welcome, Clients",
   subtitle: "Inquire for",
   services: [
@@ -165,7 +217,14 @@ export const headerNavWelcome = {
   ],
   progressLabel: "Preparing workspace",
   progressMessage: "Loading your workspace. Almost there.",
-  transitionMs: 2600,
+  progressSteps: [
+    "Routing to your destination…",
+    "Syncing stack clearance matrix…",
+    "Hydrating project orbit…",
+    "Polishing candy-purple UI…",
+    "Opening workspace — hold tight…",
+  ],
+  transitionMs: 2800,
 } as const;
 
 export const projectGroups: ProjectGroup[] = [
@@ -212,6 +271,8 @@ export const projectGroups: ProjectGroup[] = [
       { label: "AI Barangay", href: "https://ai-barangay-system.vercel.app/home" },
       { label: "Employee / Farm Management", href: "https://employee-farm-management-3-3.vercel.app/" },
       { label: "Hospital Management", href: "https://hospital-management-system-4-4.vercel.app/" },
+      { label: "Dental Clinic Galaxy Assistant", href: "https://dental-clinic-assistant-sigma.vercel.app/" },
+      { label: "Blush — QR Code Attendance", href: "https://blush-qr-code-attendance-system.vercel.app/" },
       { label: "Bus Reservation", href: "https://bus-reservation-dusky.vercel.app/" },
       { label: "Facility Reservation (client)", href: "https://facility-reservation-system-beta.vercel.app/client" },
       { label: "Fire Incident System", href: "https://fire-incident-system-7gkj.vercel.app/" },
@@ -237,6 +298,7 @@ export const projectGroups: ProjectGroup[] = [
     items: [
       { label: "Quiz System", href: "https://quiz-system-lovat.vercel.app/home" },
       { label: "Class System", href: "https://class-system-xi.vercel.app/" },
+      { label: "CSU OJT Management System", href: "https://ojt-management-system-ai.vercel.app/" },
       { label: "Books", href: "https://books-three-nu.vercel.app/" },
       { label: "Voting System", href: "https://voting-system123.vercel.app/home" },
       { label: "Cultural Map Journey", href: "https://cultural-map-journeyv1.vercel.app/" },

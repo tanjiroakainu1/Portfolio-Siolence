@@ -3,6 +3,8 @@ import { Hero } from "./Hero";
 import { SkillsSection } from "./SkillsSection";
 import { ProjectSections } from "./ProjectSections";
 import { ContactSection } from "./ContactSection";
+import { PortfolioEntryGate } from "./PortfolioEntryGate";
+import { usePortfolioUnlock } from "../context/PortfolioUnlockContext";
 import {
   assistant,
   profile,
@@ -18,17 +20,19 @@ export function PortfolioView({
   hidden: boolean;
   scrollToProjects: boolean;
 }) {
+  const { unlocked, loading } = usePortfolioUnlock();
   const projectsAnchorRef = useRef<HTMLElement>(null);
+  const showHome = unlocked && !loading;
 
   useEffect(() => {
-    if (hidden || !scrollToProjects) return;
+    if (hidden || !scrollToProjects || !unlocked) return;
     const id = window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         projectsAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
     return () => window.cancelAnimationFrame(id);
-  }, [hidden, scrollToProjects]);
+  }, [hidden, scrollToProjects, unlocked]);
 
   return (
     <section
@@ -37,21 +41,25 @@ export function PortfolioView({
       aria-label="Portfolio"
       hidden={hidden}
     >
-      <div className="relative z-[1] mx-auto w-full max-w-layout flex-1 px-[clamp(0.875rem,4vw,1.5rem)] py-[clamp(1rem,3vw,2rem)] pb-[max(5.75rem,clamp(1.5rem,5vw,4rem))] sm:pb-[max(6.25rem,clamp(1.5rem,5vw,4rem))]">
-        <main className="min-w-0">
-          <Hero profile={profile} assistant={assistant} />
-          <ContactSection assistant={assistant} social={social} />
-          <SkillsSection skills={skills} />
-          <section
-            id="projects"
-            ref={projectsAnchorRef}
-            className="scroll-mt-[5.5rem]"
-            aria-label="Projects and live demos"
-          >
-            <ProjectSections groups={projectGroups} />
-          </section>
-        </main>
-      </div>
+      {!hidden && !showHome ? <PortfolioEntryGate /> : null}
+
+      {showHome ? (
+        <div className="relative z-[1] mx-auto w-full max-w-layout flex-1 px-[clamp(0.875rem,4vw,1.5rem)] py-[clamp(1rem,3vw,2rem)] pb-[max(5.75rem,clamp(1.5rem,5vw,4rem))] sm:pb-[max(6.25rem,clamp(1.5rem,5vw,4rem))]">
+          <main className="min-w-0">
+            <Hero profile={profile} assistant={assistant} />
+            <ContactSection assistant={assistant} social={social} />
+            <SkillsSection skills={skills} />
+            <section
+              id="projects"
+              ref={projectsAnchorRef}
+              className="scroll-mt-[5.5rem]"
+              aria-label="Projects and live demos"
+            >
+              <ProjectSections groups={projectGroups} />
+            </section>
+          </main>
+        </div>
+      ) : null}
     </section>
   );
 }

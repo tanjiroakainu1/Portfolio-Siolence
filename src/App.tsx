@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { assistant, profile } from "./data/portfolioData";
 import { useHashRoute } from "./hooks/useHashRoute";
+import { usePortfolioUnlock } from "./context/PortfolioUnlockContext";
 import { SiteHeader, type HeaderNavTarget } from "./components/SiteHeader";
 import { PortfolioView } from "./components/PortfolioView";
 import { ProjectShowcaseView } from "./components/ProjectShowcaseView";
@@ -11,12 +12,41 @@ import { FloatingChatDock } from "./components/FloatingChatDock";
 
 export default function App() {
   const { route, projectsFocus } = useHashRoute(assistant.name);
+  const { unlocked, loading, signalNavBlocked, resetToFirstEntry } = usePortfolioUnlock();
   const [navTarget, setNavTarget] = useState<HeaderNavTarget | null>(null);
   const [fabPanelOpen, setFabPanelOpen] = useState(false);
+
+  const navLocked = !unlocked || loading;
+
+  const handleHeaderNavigate = useCallback(
+    (target: HeaderNavTarget) => {
+      if (navLocked) {
+        signalNavBlocked();
+        return;
+      }
+      setNavTarget(target);
+    },
+    [navLocked, signalNavBlocked]
+  );
+
+  const handleReturnToFirstEntry = useCallback(() => {
+    resetToFirstEntry();
+    if (route !== "portfolio") {
+      window.location.hash = "#portfolio";
+    }
+    window.scrollTo(0, 0);
+  }, [resetToFirstEntry, route]);
 
   const finishHeaderNav = useCallback(() => {
     setNavTarget(null);
   }, []);
+
+  useEffect(() => {
+    if (!navLocked) return;
+    if (route === "chat" || route === "showcase") {
+      window.location.hash = "#portfolio";
+    }
+  }, [navLocked, route]);
 
   useEffect(() => {
     document.title = `${profile.name} · ${assistant.name} ${assistant.navSubtitle} · Portfolio`;
@@ -45,7 +75,11 @@ export default function App() {
         assistant={assistant}
         route={route}
         projectsFocus={projectsFocus}
-        onHeaderNavigate={setNavTarget}
+        navLocked={navLocked}
+        showFirstEntry={unlocked && !loading}
+        onHeaderNavigate={handleHeaderNavigate}
+        onLockedNavAttempt={signalNavBlocked}
+        onReturnToFirstEntry={handleReturnToFirstEntry}
       />
       <HeaderNavTransition target={navTarget} onDone={finishHeaderNav} />
       {route === "portfolio" || route === "showcase" ? (
@@ -64,7 +98,8 @@ export default function App() {
         navTarget={navTarget}
         panelOpen={fabPanelOpen}
         setPanelOpen={setFabPanelOpen}
-        onOpenFullChat={() => setNavTarget("chat")}
+        onOpenFullChat={() => handleHeaderNavigate("chat")}
+        hidden={navLocked}
       />
     </div>
   );
