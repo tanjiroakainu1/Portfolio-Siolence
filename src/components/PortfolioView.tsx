@@ -44,7 +44,7 @@ export function PortfolioView({
       {!hidden && !showHome ? <PortfolioEntryGate /> : null}
 
       {showHome ? (
-        <div className="relative z-[1] mx-auto w-full max-w-layout flex-1 px-[clamp(0.875rem,4vw,1.5rem)] py-[clamp(1rem,3vw,2rem)] pb-[max(5.75rem,clamp(1.5rem,5vw,4rem))] sm:pb-[max(6.25rem,clamp(1.5rem,5vw,4rem))]">
+        <div className="portfolio-view__main relative z-[1] mx-auto w-full max-w-layout flex-1 px-[clamp(0.875rem,4vw,1.5rem)] pt-[clamp(0.45rem,1.2vh,0.85rem)] pb-[max(5rem,clamp(1.25rem,4vw,3rem))] sm:pb-[max(5.5rem,clamp(1.5rem,4vw,3.5rem))]">
           <main className="min-w-0">
             <Hero profile={profile} assistant={assistant} />
             <ContactSection assistant={assistant} social={social} />
@@ -52,7 +52,7 @@ export function PortfolioView({
             <section
               id="projects"
               ref={projectsAnchorRef}
-              className="scroll-mt-[5.5rem]"
+              className="scroll-mt-[calc(var(--site-header-offset,3rem)+0.35rem)]"
               aria-label="Projects and live demos"
             >
               <ProjectSections groups={projectGroups} />

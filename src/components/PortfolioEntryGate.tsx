@@ -4,6 +4,7 @@ import {
   portfolioEnvelope,
   profile,
 } from "../data/portfolioData";
+import { lockPageScroll } from "../lib/lockPageScroll";
 import { FloatingParticles } from "./FloatingParticles";
 import { ExpertiseCoverageChart } from "./ExpertiseCoverageChart";
 import { usePortfolioUnlock } from "../context/PortfolioUnlockContext";
@@ -32,8 +33,7 @@ function DeveloperUnlockLoader({ onComplete }: { onComplete: () => void }) {
   const pct = Math.round(progress);
 
   useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockScroll = lockPageScroll();
     const start = performance.now();
     let frame = 0;
 
@@ -47,61 +47,73 @@ function DeveloperUnlockLoader({ onComplete }: { onComplete: () => void }) {
     const doneTimer = window.setTimeout(onComplete, duration);
 
     return () => {
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       cancelAnimationFrame(frame);
       window.clearTimeout(doneTimer);
     };
   }, [duration, onComplete]);
 
   return (
-    <div className="developer-unlock-loader" role="dialog" aria-modal="true" aria-labelledby="developer-unlock-title" aria-busy="true">
-      <div className="developer-unlock-loader__particles" aria-hidden>
+    <div
+      className="mystery-boot-loader"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mystery-boot-title"
+      aria-busy="true"
+    >
+      <div className="mystery-boot-loader__backdrop" aria-hidden />
+      <div className="mystery-boot-loader__grid" aria-hidden />
+      <div className="mystery-boot-loader__particles" aria-hidden>
         <FloatingParticles variant="chat" />
       </div>
-      <div className="developer-unlock-loader__nebula" aria-hidden />
+      <div className="mystery-boot-loader__nebula" aria-hidden />
 
-      <div className="developer-unlock-loader__card">
-        <p className="developer-unlock-loader__badge">{portfolioEnvelope.entryBadge}</p>
-        <p id="developer-unlock-title" className="developer-unlock-loader__eyebrow">
-          {portfolioEnvelope.loadingTitle}
-        </p>
+      <div className="mystery-boot-loader__stage">
+        <div className="mystery-boot-loader__card-wrap">
+          <span className="mystery-boot-loader__card-orbit" aria-hidden />
+          <article className="mystery-boot-loader__card">
+            <div className="mystery-boot-loader__card-glow" aria-hidden />
+            <p className="mystery-boot-loader__badge">{portfolioEnvelope.entryBadge}</p>
+            <p id="mystery-boot-title" className="mystery-boot-loader__eyebrow">
+              {portfolioEnvelope.loadingTitle}
+            </p>
 
-        <div className="developer-unlock-loader__orbit-wrap">
-          <span className="developer-unlock-loader__ring developer-unlock-loader__ring--outer" aria-hidden />
-          <span className="developer-unlock-loader__ring developer-unlock-loader__ring--mid" aria-hidden />
-          <span className="developer-unlock-loader__ring developer-unlock-loader__ring--inner" aria-hidden />
-          <div className="developer-unlock-loader__portrait">
-            <img src={portraitImageSrc} alt="" width={88} height={88} decoding="async" />
-          </div>
+            <div className="mystery-boot-loader__orbit-wrap">
+              <span className="mystery-boot-loader__ring mystery-boot-loader__ring--outer" aria-hidden />
+              <span className="mystery-boot-loader__ring mystery-boot-loader__ring--mid" aria-hidden />
+              <span className="mystery-boot-loader__ring mystery-boot-loader__ring--inner" aria-hidden />
+              <div className="mystery-boot-loader__portrait">
+                <img src={portraitImageSrc} alt="" width={88} height={88} decoding="async" />
+              </div>
+            </div>
+
+            <p className="mystery-boot-loader__name">{profile.name}</p>
+            <p className="mystery-boot-loader__role">{portfolioEnvelope.role}</p>
+
+            <div className="mystery-boot-loader__progress">
+              <div className="mystery-boot-loader__progress-head">
+                <span className="mystery-boot-loader__status">{status}</span>
+                <span className="mystery-boot-loader__pct" aria-live="polite">
+                  {pct}
+                  <span className="mystery-boot-loader__pct-suffix">%</span>
+                </span>
+              </div>
+              <div
+                className="mystery-boot-loader__track"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={pct}
+              >
+                <span className="mystery-boot-loader__fill" style={{ width: `${pct}%` }} />
+                <span className="mystery-boot-loader__scan" aria-hidden />
+              </div>
+              <p className="mystery-boot-loader__foot">
+                {pct >= 99 ? portfolioEnvelope.loadingComplete : portfolioEnvelope.classified}
+              </p>
+            </div>
+          </article>
         </div>
-
-        <p className="developer-unlock-loader__name">{profile.name}</p>
-        <p className="developer-unlock-loader__role">{portfolioEnvelope.role}</p>
-
-        <div className="developer-unlock-loader__progress-wrap">
-          <div className="developer-unlock-loader__progress-head">
-            <span className="developer-unlock-loader__status">{status}</span>
-            <span className="developer-unlock-loader__pct" aria-live="polite">
-              {pct}
-              <span className="developer-unlock-loader__pct-suffix">%</span>
-            </span>
-          </div>
-          <div
-            className="developer-unlock-loader__track"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={pct}
-            aria-label="Workspace initialization progress"
-          >
-            <div className="developer-unlock-loader__fill" style={{ width: `${pct}%` }} />
-            <span className="developer-unlock-loader__scan" aria-hidden />
-          </div>
-        </div>
-
-        <p className="developer-unlock-loader__foot">
-          {pct >= 99 ? portfolioEnvelope.loadingComplete : portfolioEnvelope.classified}
-        </p>
       </div>
     </div>
   );
@@ -234,11 +246,13 @@ function EntryEnvelope({
   );
 }
 
-/** Fixed first-entry screen — portfolio only. Separate from header nav redirect loaders. */
+/** Fixed first-entry screen — portfolio only. Fits viewport; no page scroll. */
 export function PortfolioEntryGate() {
   const { loading, startUnlock, completeUnlock, navBlockedTick } = usePortfolioUnlock();
   const [flapTriggered, setFlapTriggered] = useState(false);
   const [navShake, setNavShake] = useState(false);
+
+  useEffect(() => lockPageScroll(), []);
 
   useEffect(() => {
     if (navBlockedTick === 0) return;
@@ -246,15 +260,6 @@ export function PortfolioEntryGate() {
     const t = window.setTimeout(() => setNavShake(false), 720);
     return () => window.clearTimeout(t);
   }, [navBlockedTick]);
-
-  useEffect(() => {
-    if (!loading && !flapTriggered) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [loading, flapTriggered]);
 
   const handleUnlock = () => {
     setFlapTriggered(true);
@@ -278,12 +283,13 @@ export function PortfolioEntryGate() {
         <FloatingParticles variant="portfolio" />
       </div>
 
-      <div className="portfolio-entry-screen__content">
+      <div className="portfolio-entry-screen__frame">
         <p className="portfolio-entry-screen__label">
           <span className="portfolio-entry-screen__label-dot" aria-hidden />
           {portfolioEnvelope.screenLabel}
           <span className="portfolio-entry-screen__label-dot" aria-hidden />
         </p>
+
         <div className="portfolio-entry-screen__stage">
           <div className="portfolio-entry-screen__envelope-col">
             <EntryEnvelope
@@ -300,10 +306,6 @@ export function PortfolioEntryGate() {
           </span>
 
           <div className="portfolio-entry-screen__charts-col">
-            <p className="portfolio-entry-screen__charts-hint" aria-hidden>
-              <span>Stack clearance</span>
-              <span className="portfolio-entry-screen__charts-hint-arrow">↓</span>
-            </p>
             <ExpertiseCoverageChart variant="gate" className="portfolio-entry-screen__charts" />
           </div>
         </div>

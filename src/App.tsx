@@ -69,7 +69,7 @@ export default function App() {
       : "relative flex min-h-dvh min-h-[100dvh] flex-col";
 
   return (
-    <div className={shellClass}>
+    <div className={shellClass} data-nav-gate={navLocked ? "locked" : "browse"}>
       <SiteHeader
         profile={profile}
         assistant={assistant}

@@ -10,8 +10,8 @@ const CHIP_STYLES = [
 
 export function Hero({ profile, assistant }: { profile: Profile; assistant: Assistant }) {
   return (
-    <header className="mb-[clamp(0.35rem,1.5vw,1rem)] border-b border-fuchsia-500/15 pb-[clamp(1rem,3vw,1.5rem)] pt-[clamp(0.35rem,1.5vw,0.6rem)] motion-safe:animate-envelope-letter-rise">
-      <div className="relative overflow-hidden rounded-[1.35rem] border border-fuchsia-400/35 bg-gradient-to-br from-fuchsia-500/[0.12] via-page/88 to-violet-600/[0.22] p-[clamp(1rem,3vw,1.5rem)] shadow-panel ring-1 ring-fuchsia-400/20 backdrop-blur-[1.5px] sm:rounded-3xl sm:p-8">
+    <header className="portfolio-hero mb-[clamp(0.25rem,1vh,0.65rem)] border-b border-fuchsia-500/15 pb-[clamp(0.75rem,2vh,1.15rem)] pt-[clamp(0.15rem,0.8vh,0.4rem)] motion-safe:animate-envelope-letter-rise">
+      <div className="relative overflow-hidden rounded-[1.2rem] border border-fuchsia-400/35 bg-gradient-to-br from-fuchsia-500/[0.12] via-page/88 to-violet-600/[0.22] p-[clamp(0.85rem,2.5vw,1.15rem)] shadow-panel ring-1 ring-fuchsia-400/20 backdrop-blur-[1.5px] sm:rounded-3xl sm:p-6">
         <div
           className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-gradient-to-br from-accent/30 to-transparent blur-3xl motion-safe:animate-galaxy-shimmer"
           aria-hidden
@@ -27,7 +27,7 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
         />
 
         <div className="relative mx-auto flex w-full max-w-[36rem] flex-col items-center antialiased">
-          <div className="mb-5 flex w-full max-w-lg items-center justify-center gap-3 text-center">
+          <div className="mb-3 flex w-full max-w-lg items-center justify-center gap-2 text-center sm:mb-4 sm:gap-3">
             <span className="h-px w-8 max-w-[2.5rem] shrink-0 bg-gradient-to-r from-transparent to-fuchsia-400/65 sm:w-12" aria-hidden />
             <p className="m-0 min-w-0 shrink font-display text-[clamp(0.65rem,1.85vw,0.72rem)] font-semibold uppercase tracking-[0.22em] text-fuchsia-200/95">
               {profile.year} · {profile.title}
@@ -35,7 +35,7 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
             <span className="h-px w-8 max-w-[2.5rem] shrink-0 bg-gradient-to-l from-transparent to-violet-400/65 sm:w-12" aria-hidden />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-5">
             <div className="relative mx-auto w-fit">
               <div className="absolute -inset-1 rounded-[1.45rem] bg-candy-gradient opacity-95 blur-[3px]" aria-hidden />
               <img
@@ -45,7 +45,7 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
                 height={160}
                 decoding="async"
                 fetchPriority="high"
-                className="relative mx-auto block h-32 w-32 rounded-[1.25rem] border border-fuchsia-400/25 bg-surface object-cover object-[center_15%] shadow-[0_16px_48px_rgba(0,0,0,0.55),0_0_48px_rgba(232,121,249,0.18)] ring-2 ring-fuchsia-400/20 sm:h-36 sm:w-36"
+                className="relative mx-auto block h-28 w-28 rounded-[1.15rem] border border-fuchsia-400/25 bg-surface object-cover object-[center_15%] shadow-[0_16px_48px_rgba(0,0,0,0.55),0_0_48px_rgba(232,121,249,0.18)] ring-2 ring-fuchsia-400/20 sm:h-32 sm:w-32"
               />
             </div>
           </div>
@@ -53,16 +53,16 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
           <h1 className="m-0 max-w-[20ch] text-balance bg-gradient-to-br from-white via-fuchsia-100 to-violet-200 bg-clip-text text-center font-display text-[clamp(1.7rem,5.2vw,2.5rem)] font-semibold leading-[1.12] tracking-[-0.04em] text-transparent drop-shadow-[0_0_36px_rgba(232,121,249,0.35)]">
             {profile.name}
           </h1>
-          <p className="mt-3.5 w-full max-w-[34rem] text-balance bg-gradient-to-r from-fuchsia-100/95 via-slate-100 to-violet-200/90 bg-clip-text px-2 text-center font-display text-[clamp(0.94rem,2.5vw,1.08rem)] font-medium leading-[1.45] tracking-[-0.01em] text-transparent">
+          <p className="mt-2.5 w-full max-w-[34rem] text-balance bg-gradient-to-r from-fuchsia-100/95 via-slate-100 to-violet-200/90 bg-clip-text px-2 text-center font-display text-[clamp(0.88rem,2.3vw,1.02rem)] font-medium leading-[1.42] tracking-[-0.01em] text-transparent sm:mt-3">
             {profile.tagline}
           </p>
 
-          <div className="relative mt-8 w-full max-w-[34rem]">
+          <div className="relative mt-5 w-full max-w-[34rem] sm:mt-6">
             <div
               className="pointer-events-none absolute left-0 top-1 bottom-1 w-[3px] rounded-full bg-gradient-to-b from-fuchsia-400/75 via-violet-400/60 to-pink-400/50"
               aria-hidden
             />
-            <div className="space-y-5 pl-5 font-hero text-[clamp(0.875rem,2.35vw,0.98rem)] leading-[1.68] tracking-[0.012em]">
+            <div className="space-y-3.5 pl-4 font-hero text-[clamp(0.84rem,2.2vw,0.94rem)] leading-[1.62] tracking-[0.012em] sm:space-y-4 sm:pl-5 sm:text-[0.94rem]">
               <p className="m-0 text-left text-slate-200/92 [&::selection]:bg-fuchsia-500/25">{profile.intro}</p>
               <p className="m-0 text-left font-medium text-slate-100/95 [&::selection]:bg-violet-500/25">
                 {profile.introClosing}
@@ -73,7 +73,7 @@ export function Hero({ profile, assistant }: { profile: Profile; assistant: Assi
             </div>
           </div>
 
-          <section className="mt-9 w-full max-w-[34rem] rounded-2xl border border-violet-400/32 bg-gradient-to-br from-violet-500/12 via-page/88 to-fuchsia-500/12 p-4 text-left shadow-[0_8px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-5">
+          <section className="mt-6 w-full max-w-[34rem] rounded-2xl border border-violet-400/32 bg-gradient-to-br from-violet-500/12 via-page/88 to-fuchsia-500/12 p-3.5 text-left shadow-[0_8px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-7 sm:p-4">
             <div className="mb-4 flex w-full items-center gap-3">
               <span className="h-px min-w-[1.25rem] flex-1 bg-gradient-to-r from-transparent to-fuchsia-400/50" aria-hidden />
               <h2 className="m-0 shrink-0 text-center font-display text-[clamp(0.68rem,1.9vw,0.76rem)] font-semibold uppercase tracking-[0.2em] text-fuchsia-100/95">
