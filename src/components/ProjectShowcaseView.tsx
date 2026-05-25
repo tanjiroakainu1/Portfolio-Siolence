@@ -101,12 +101,12 @@ export function ProjectShowcaseView({ hidden }: { hidden: boolean }) {
   return (
     <section
       id="view-project-showcase"
-      className={`relative flex min-h-0 flex-1 flex-col ${open ? "z-[110] isolate" : "z-10"}`}
+      className={`relative ${open ? "z-[110] isolate flex min-h-dvh flex-col" : "z-10"}`}
       aria-label="Project showcase"
       hidden={hidden}
     >
       <div
-        className={`relative mx-auto w-full max-w-layout flex-1 px-[max(0.75rem,min(1.5rem,4vw))] py-[clamp(1rem,3.5vw,2rem)] pb-[max(5.5rem,min(7rem,12vw))] pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))] sm:px-[clamp(1rem,4vw,1.5rem)] sm:pb-[max(6rem,min(7.5rem,10vw))] ${open ? "z-0" : "z-[1]"}`}
+        className={`relative mx-auto w-full max-w-layout px-[max(0.75rem,min(1.5rem,4vw))] py-[clamp(1rem,3.5vw,2rem)] pb-[max(5.5rem,min(7rem,12vw))] pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))] sm:px-[clamp(1rem,4vw,1.5rem)] sm:pb-[max(6rem,min(7.5rem,10vw))] ${open ? "z-0 flex-1" : "z-[1]"}`}
       >
         <header className="showcase-hero mb-[clamp(1.35rem,4.2vw,2.25rem)] border-b border-fuchsia-500/15 pb-[clamp(1.1rem,3.2vw,1.65rem)] text-center sm:text-left">
           <p className="showcase-hero__kicker m-0">

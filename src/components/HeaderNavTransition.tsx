@@ -3,6 +3,7 @@ import { headerNavWelcome, portraitImageSrc, profile } from "../data/portfolioDa
 import { FloatingParticles } from "./FloatingParticles";
 
 import { PROJECT_SHOWCASE_HASH } from "../lib/projectShowcaseNav";
+import { lockPageScroll } from "../lib/lockPageScroll";
 
 type NavTarget = "portfolio" | "chat" | "showcase";
 
@@ -19,22 +20,6 @@ function hashForTarget(target: NavTarget): string {
   if (target === "chat") return "#chat";
   if (target === "showcase") return `#${PROJECT_SHOWCASE_HASH}`;
   return "#portfolio";
-}
-
-function lockPageScroll(): () => void {
-  const html = document.documentElement;
-  const body = document.body;
-  const prevHtml = html.style.overflow;
-  const prevBody = body.style.overflow;
-  const prevBodyTouch = body.style.touchAction;
-  html.style.overflow = "hidden";
-  body.style.overflow = "hidden";
-  body.style.touchAction = "none";
-  return () => {
-    html.style.overflow = prevHtml;
-    body.style.overflow = prevBody;
-    body.style.touchAction = prevBodyTouch;
-  };
 }
 
 export function HeaderNavTransition({

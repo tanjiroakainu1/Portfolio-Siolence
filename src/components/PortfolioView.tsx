@@ -37,14 +37,14 @@ export function PortfolioView({
   return (
     <section
       id="view-portfolio"
-      className="portfolio-view relative z-10 flex min-h-0 flex-1 flex-col"
+      className={`portfolio-view relative z-10 ${showHome ? "portfolio-view--browse" : ""}`}
       aria-label="Portfolio"
       hidden={hidden}
     >
       {!hidden && !showHome ? <PortfolioEntryGate /> : null}
 
       {showHome ? (
-        <div className="portfolio-view__main relative z-[1] mx-auto w-full max-w-layout flex-1 px-[clamp(0.875rem,4vw,1.5rem)] pt-[clamp(0.45rem,1.2vh,0.85rem)] pb-[max(5rem,clamp(1.25rem,4vw,3rem))] sm:pb-[max(5.5rem,clamp(1.5rem,4vw,3.5rem))]">
+        <div className="portfolio-view__main relative z-[1] mx-auto w-full max-w-layout px-[clamp(0.875rem,4vw,1.5rem)] pt-[clamp(0.45rem,1.2vh,0.85rem)] pb-[max(5rem,clamp(1.25rem,4vw,3rem))] sm:pb-[max(5.5rem,clamp(1.5rem,4vw,3.5rem))]">
           <main className="min-w-0">
             <Hero profile={profile} assistant={assistant} />
             <ContactSection assistant={assistant} social={social} />

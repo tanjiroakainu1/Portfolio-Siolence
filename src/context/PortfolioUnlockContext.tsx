@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { releasePageScroll } from "../lib/lockPageScroll";
 
 const STORAGE_KEY = "portfolio-developer-unlocked";
 
@@ -46,6 +47,7 @@ export function PortfolioUnlockProvider({ children }: { children: ReactNode }) {
   const completeUnlock = useCallback(() => {
     setLoading(false);
     setUnlocked(true);
+    releasePageScroll();
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {

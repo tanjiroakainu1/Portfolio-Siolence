@@ -9,6 +9,7 @@ import { ChatView } from "./components/ChatView";
 import { HeaderNavTransition } from "./components/HeaderNavTransition";
 import { FloatingParticles } from "./components/FloatingParticles";
 import { FloatingChatDock } from "./components/FloatingChatDock";
+import { releasePageScroll } from "./lib/lockPageScroll";
 
 export default function App() {
   const { route, projectsFocus } = useHashRoute(assistant.name);
@@ -63,10 +64,15 @@ export default function App() {
     }
   }, [route, projectsFocus]);
 
+  useEffect(() => {
+    if (navLocked) return;
+    releasePageScroll();
+  }, [navLocked]);
+
   const shellClass =
     route === "chat"
       ? "relative flex h-[100dvh] max-h-[100dvh] min-h-0 flex-col overflow-hidden"
-      : "relative flex min-h-dvh min-h-[100dvh] flex-col";
+      : "relative min-h-dvh";
 
   return (
     <div className={shellClass} data-nav-gate={navLocked ? "locked" : "browse"}>

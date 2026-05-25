@@ -169,8 +169,12 @@
     }
   }
 
-  .portfolio-view {
-    min-height: min(100%, calc(100dvh - var(--site-header-offset, 3rem)));
+  .portfolio-view--browse {
+    display: block;
+  }
+
+  .portfolio-view--browse .portfolio-view__main {
+    display: block;
   }
 
   #app {
