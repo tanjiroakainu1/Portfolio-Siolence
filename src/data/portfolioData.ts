@@ -47,10 +47,10 @@ export const portfolioEnvelope = {
   eyebrow: "✦ Galaxy mail · Mystery clearance ✦",
   role: "FULLSTACK DEVELOPER",
   unlockLabel: "Unlock Mysteries",
-  unlockHint: "8-second nebula boot · then full galaxy access",
+  unlockHint: "3-second nebula boot · then full galaxy access",
   unlockAria: "Unlock galaxy mysteries and load portfolio workspace",
   stuckNote: "This screen appears when you open Portfolio — unlock mysteries once per session.",
-  loadingDurationMs: 8000,
+  loadingDurationMs: 3200,
   loadingTitle: "Booting mystery workspace",
   loadingComplete: "Mysteries unlocked — welcome to the portfolio.",
   loadingSteps: [

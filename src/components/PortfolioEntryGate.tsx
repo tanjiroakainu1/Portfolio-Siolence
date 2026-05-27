@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   portraitImageSrc,
   portfolioEnvelope,
@@ -22,7 +22,13 @@ const SPARKLE_POSITIONS = [
   { style: { top: "8%", left: "44%" }, delay: "0.85s", size: "sm" },
 ] as const;
 
-function DeveloperUnlockLoader({ onComplete }: { onComplete: () => void }) {
+function DeveloperUnlockLoader({
+  onComplete,
+  liteMode,
+}: {
+  onComplete: () => void;
+  liteMode: boolean;
+}) {
   const [progress, setProgress] = useState(0);
   const duration = portfolioEnvelope.loadingDurationMs;
   const stepIndex = Math.min(
@@ -35,27 +41,26 @@ function DeveloperUnlockLoader({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     const unlockScroll = lockPageScroll();
     const start = performance.now();
-    let frame = 0;
-
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      setProgress(t * 100);
-      if (t < 1) frame = requestAnimationFrame(tick);
+    const tick = () => {
+      const t = Math.min(1, (performance.now() - start) / duration);
+      const next = t * 100;
+      setProgress((prev) => (Math.abs(next - prev) >= 0.8 ? next : prev));
     };
-    frame = requestAnimationFrame(tick);
+    tick();
+    const interval = window.setInterval(tick, 90);
 
     const doneTimer = window.setTimeout(onComplete, duration);
 
     return () => {
       unlockScroll();
-      cancelAnimationFrame(frame);
+      window.clearInterval(interval);
       window.clearTimeout(doneTimer);
     };
   }, [duration, onComplete]);
 
   return (
     <div
-      className="mystery-boot-loader"
+      className={`mystery-boot-loader ${liteMode ? "is-lite" : ""}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="mystery-boot-title"
@@ -63,9 +68,11 @@ function DeveloperUnlockLoader({ onComplete }: { onComplete: () => void }) {
     >
       <div className="mystery-boot-loader__backdrop" aria-hidden />
       <div className="mystery-boot-loader__grid" aria-hidden />
-      <div className="mystery-boot-loader__particles" aria-hidden>
-        <FloatingParticles variant="chat" />
-      </div>
+      {!liteMode ? (
+        <div className="mystery-boot-loader__particles" aria-hidden>
+          <FloatingParticles variant="chat" />
+        </div>
+      ) : null}
       <div className="mystery-boot-loader__nebula" aria-hidden />
 
       <div className="mystery-boot-loader__stage">
@@ -251,6 +258,13 @@ export function PortfolioEntryGate() {
   const { loading, startUnlock, completeUnlock, navBlockedTick } = usePortfolioUnlock();
   const [flapTriggered, setFlapTriggered] = useState(false);
   const [navShake, setNavShake] = useState(false);
+  const liteMode = useMemo(() => {
+    if (typeof window === "undefined") return true;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const narrow = window.matchMedia("(max-width: 960px)").matches;
+    const lowCores = (navigator.hardwareConcurrency ?? 8) <= 6;
+    return reducedMotion || (narrow && lowCores);
+  }, []);
 
   useEffect(() => lockPageScroll(), []);
 
@@ -267,21 +281,29 @@ export function PortfolioEntryGate() {
   };
 
   return (
-    <div className="portfolio-entry-screen" role="region" aria-label={portfolioEnvelope.screenLabel}>
+    <div
+      className={`portfolio-entry-screen ${liteMode ? "is-lite" : ""}`}
+      role="region"
+      aria-label={portfolioEnvelope.screenLabel}
+    >
       <div className="portfolio-entry-screen__backdrop" aria-hidden />
-      <div className="portfolio-entry-screen__grid" aria-hidden />
-      <svg className="portfolio-entry-screen__constellation" viewBox="0 0 400 400" aria-hidden>
-        <path d="M40 80 L120 140 L200 60 L280 130 L360 70" />
-        <path d="M60 320 L160 260 L240 310 L340 240" />
-        <circle cx="120" cy="140" r="2" />
-        <circle cx="200" cy="60" r="2.5" />
-        <circle cx="280" cy="130" r="2" />
-        <circle cx="160" cy="260" r="2" />
-        <circle cx="340" cy="240" r="2.5" />
-      </svg>
-      <div className="portfolio-entry-screen__particles" aria-hidden>
-        <FloatingParticles variant="portfolio" />
-      </div>
+      {!liteMode ? (
+        <>
+          <div className="portfolio-entry-screen__grid" aria-hidden />
+          <svg className="portfolio-entry-screen__constellation" viewBox="0 0 400 400" aria-hidden>
+            <path d="M40 80 L120 140 L200 60 L280 130 L360 70" />
+            <path d="M60 320 L160 260 L240 310 L340 240" />
+            <circle cx="120" cy="140" r="2" />
+            <circle cx="200" cy="60" r="2.5" />
+            <circle cx="280" cy="130" r="2" />
+            <circle cx="160" cy="260" r="2" />
+            <circle cx="340" cy="240" r="2.5" />
+          </svg>
+          <div className="portfolio-entry-screen__particles" aria-hidden>
+            <FloatingParticles variant="portfolio" />
+          </div>
+        </>
+      ) : null}
 
       <div className="portfolio-entry-screen__frame">
         <p className="portfolio-entry-screen__label">
@@ -313,6 +335,7 @@ export function PortfolioEntryGate() {
 
       {loading ? (
         <DeveloperUnlockLoader
+          liteMode={liteMode}
           onComplete={() => {
             completeUnlock();
             window.scrollTo(0, 0);

@@ -734,6 +734,26 @@
     opacity: 0.55;
   }
 
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__aura,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__beam,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__sparkle,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__seal-orbit,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__unlock-spark,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__unlock-ring,
+  .portfolio-entry-screen.is-lite .portfolio-entry-screen__connector {
+    display: none !important;
+  }
+
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__halo,
+  .portfolio-entry-screen.is-lite .portfolio-entry-envelope__pocket,
+  .portfolio-entry-screen.is-lite .portfolio-entry-screen__envelope-col,
+  .portfolio-entry-screen.is-lite .portfolio-entry-screen__charts-col {
+    animation: none !important;
+    filter: none !important;
+    backdrop-filter: none;
+  }
+
   .portfolio-entry-screen__frame {
     position: relative;
     z-index: 2;
@@ -2103,7 +2123,7 @@
     overscroll-behavior: none;
     touch-action: none;
     background: rgba(8, 3, 18, 0.96);
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
     padding:
       max(0.65rem, env(safe-area-inset-top))
       max(0.65rem, env(safe-area-inset-right))
@@ -2149,6 +2169,19 @@
       radial-gradient(ellipse 80% 60% at 50% 20%, rgba(232, 121, 249, 0.45), transparent 55%),
       radial-gradient(ellipse 50% 40% at 100% 80%, rgba(168, 85, 247, 0.35), transparent 50%),
       radial-gradient(ellipse 45% 35% at 0% 70%, rgba(244, 114, 182, 0.28), transparent 48%);
+  }
+
+  .mystery-boot-loader.is-lite {
+    backdrop-filter: blur(5px);
+  }
+
+  .mystery-boot-loader.is-lite .mystery-boot-loader__grid,
+  .mystery-boot-loader.is-lite .mystery-boot-loader__card-orbit,
+  .mystery-boot-loader.is-lite .mystery-boot-loader__ring--outer,
+  .mystery-boot-loader.is-lite .mystery-boot-loader__ring--mid,
+  .mystery-boot-loader.is-lite .mystery-boot-loader__scan,
+  .mystery-boot-loader.is-lite .mystery-boot-loader__card-glow {
+    display: none !important;
   }
 
   .mystery-boot-loader__stage {
@@ -3109,6 +3142,11 @@
   .expertise-coverage--gate .expertise-coverage__title {
     font-size: clamp(0.78rem, 2.2vw, 0.95rem);
     line-height: 1.2;
+  }
+
+  .expertise-coverage--gate .expertise-coverage__radar-fill {
+    animation: none;
+    filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.22));
   }
 
   .expertise-coverage--gate .expertise-coverage__sub {
