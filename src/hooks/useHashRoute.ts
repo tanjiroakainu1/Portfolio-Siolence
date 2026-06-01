@@ -16,6 +16,8 @@ function parseHash(assistantName: string): HashRouteState {
   const legacyProject =
     raw === "projects" ||
     raw === "project" ||
+    raw === "featured-projects" ||
+    raw === "featured" ||
     raw === "client-drive" ||
     raw === "mobile-apks" ||
     raw === "project-drives";

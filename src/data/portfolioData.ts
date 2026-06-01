@@ -199,10 +199,70 @@ export interface ProjectItem {
   href: string;
 }
 
+export interface FeaturedProjectItem extends ProjectItem {
+  tag: string;
+}
+
+/** Spotlight builds — dedicated section only (excluded from Project galaxy orbits). */
+export const featuredProjectSection = {
+  id: "featured-projects",
+  kicker: "Spotlight · flagship demos",
+  title: "Featured production systems",
+  sub: "Twelve flagship builds with live site previews — tap any card to open the full system on Vercel.",
+} as const;
+
+export const featuredProjects: FeaturedProjectItem[] = [
+  { label: "Helpdesk Management System", href: "https://helpdesk-management-system1.vercel.app/", tag: "Support" },
+  { label: "Temple Management System", href: "https://temple-management-system-lac.vercel.app/", tag: "Operations" },
+  {
+    label: "Logistics Management System (LMS)",
+    href: "https://logistics-management-system-25-role.vercel.app/",
+    tag: "Logistics",
+  },
+  { label: "PrimeFlow WMS", href: "https://warehouse-management-system-sable.vercel.app/", tag: "Warehouse" },
+  { label: "Cooperative Management System", href: "https://cooperative-erp-system.vercel.app/", tag: "ERP" },
+  {
+    label: "Grace Fellowship Church Management",
+    href: "https://grace-fellowship-church-beryl.vercel.app/",
+    tag: "Church",
+  },
+  { label: "College Enrollment System", href: "https://college-enrollment.vercel.app/", tag: "Education" },
+  { label: "WORKLINK — JobHub AI", href: "https://work-link-jobhub-ai.vercel.app/", tag: "Careers" },
+  {
+    label: "HCC TAP System (Document Processing)",
+    href: "https://document-processing-system-ai.vercel.app/",
+    tag: "Document AI",
+  },
+  { label: "Blush — QR Code Attendance", href: "https://blush-qr-code-attendance-system.vercel.app/", tag: "Attendance" },
+  { label: "Dental Clinic Galaxy Assistant", href: "https://dental-clinic-assistant-sigma.vercel.app/", tag: "Clinic" },
+  { label: "CSU OJT Management System", href: "https://ojt-management-system-ai.vercel.app/", tag: "OJT" },
+];
+
 export interface ProjectGroup {
   title: string;
   icon?: ProjectGroupIconKey;
   items: ProjectItem[];
+}
+
+function normalizeHref(href: string): string {
+  try {
+    const u = new URL(href);
+    const path = u.pathname.replace(/\/$/, "") || "";
+    return `${u.origin}${path}`;
+  } catch {
+    return href.replace(/\/$/, "");
+  }
+}
+
+/** Galaxy groups with featured URLs removed so tiles are not duplicated. */
+export function projectGroupsExcludingFeatured(groups: ProjectGroup[]): ProjectGroup[] {
+  const featured = new Set(featuredProjects.map((p) => normalizeHref(p.href)));
+  return groups
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((i) => !featured.has(normalizeHref(i.href))),
+    }))
+    .filter((g) => g.items.length > 0);
 }
 
 /** Shown on header navigation transition overlay (Portfolio / Project / Chat). */
@@ -234,6 +294,8 @@ export const projectGroups: ProjectGroup[] = [
     icon: "ai",
     items: [
       { label: "AI ERP System", href: "https://ai-erp-system-five.vercel.app/" },
+      { label: "Cooperative Management System", href: "https://cooperative-erp-system.vercel.app/" },
+      { label: "HCC TAP System (Document Processing)", href: "https://document-processing-system-ai.vercel.app/" },
       { label: "Document AI Verification", href: "https://document-ai-verification-system.vercel.app/" },
       { label: "System AI Guide", href: "https://system-ai-guide.vercel.app/home" },
       { label: "AI System", href: "https://ai-system123.vercel.app/" },
@@ -267,6 +329,11 @@ export const projectGroups: ProjectGroup[] = [
     title: "Management & public systems",
     icon: "building",
     items: [
+      { label: "Helpdesk Management System", href: "https://helpdesk-management-system1.vercel.app/" },
+      { label: "Temple Management System", href: "https://temple-management-system-lac.vercel.app/" },
+      { label: "Logistics Management System (LMS)", href: "https://logistics-management-system-25-role.vercel.app/" },
+      { label: "PrimeFlow WMS", href: "https://warehouse-management-system-sable.vercel.app/" },
+      { label: "Grace Fellowship Church Management", href: "https://grace-fellowship-church-beryl.vercel.app/" },
       { label: "Resident AI Management", href: "https://resident-ai-management-system.vercel.app/" },
       { label: "Volunteer Management", href: "https://volunteer-management-system12.vercel.app/" },
       { label: "AI Barangay", href: "https://ai-barangay-system.vercel.app/home" },
@@ -297,6 +364,8 @@ export const projectGroups: ProjectGroup[] = [
     title: "Education & civic",
     icon: "education",
     items: [
+      { label: "College Enrollment System", href: "https://college-enrollment.vercel.app/" },
+      { label: "WORKLINK — JobHub AI", href: "https://work-link-jobhub-ai.vercel.app/" },
       { label: "Quiz System", href: "https://quiz-system-lovat.vercel.app/home" },
       { label: "Class System", href: "https://class-system-xi.vercel.app/" },
       { label: "CSU OJT Management System", href: "https://ojt-management-system-ai.vercel.app/" },

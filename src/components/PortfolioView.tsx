@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Hero } from "./Hero";
 import { SkillsSection } from "./SkillsSection";
+import { FeaturedProjectsSection } from "./FeaturedProjectsSection";
 import { ProjectSections } from "./ProjectSections";
 import { ContactSection } from "./ContactSection";
 import { PortfolioEntryGate } from "./PortfolioEntryGate";
@@ -9,7 +10,9 @@ import {
   assistant,
   profile,
   skills,
+  featuredProjects,
   projectGroups,
+  projectGroupsExcludingFeatured,
   social,
 } from "../data/portfolioData";
 
@@ -55,7 +58,11 @@ export function PortfolioView({
               className="scroll-mt-[calc(var(--site-header-offset,3rem)+0.35rem)]"
               aria-label="Projects and live demos"
             >
-              <ProjectSections groups={projectGroups} />
+              <FeaturedProjectsSection items={featuredProjects} />
+              <ProjectSections
+                groups={projectGroupsExcludingFeatured(projectGroups)}
+                featuredCount={featuredProjects.length}
+              />
             </section>
           </main>
         </div>
