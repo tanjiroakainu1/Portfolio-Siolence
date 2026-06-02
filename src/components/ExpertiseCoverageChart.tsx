@@ -35,11 +35,13 @@ function axisPoint(index: number, count: number, radius: number) {
 export function ExpertiseCoverageChart({
   className = "",
   variant = "gate",
+  liteMode = false,
 }: {
   className?: string;
   variant?: "gate" | "embedded";
+  liteMode?: boolean;
 }) {
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(liteMode);
   const fillGradId = useId();
   const strokeGradId = useId();
   const items = expertiseCoverage;
@@ -47,18 +49,25 @@ export function ExpertiseCoverageChart({
 
   const radarFill = useMemo(() => radarPoints(items, RADAR_MAX_R), [items]);
   const gridRings = useMemo(
-    () => [25, 50, 75, 100].map((pct) => radarPoints(items.map((i) => ({ ...i, coverage: pct })), RADAR_MAX_R)),
-    [items]
+    () =>
+      (liteMode ? [50, 100] : [25, 50, 75, 100]).map((pct) =>
+        radarPoints(items.map((i) => ({ ...i, coverage: pct })), RADAR_MAX_R)
+      ),
+    [items, liteMode]
   );
 
   useEffect(() => {
+    if (liteMode) {
+      setReady(true);
+      return;
+    }
     const id = requestAnimationFrame(() => setReady(true));
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [liteMode]);
 
   return (
     <section
-      className={`expertise-coverage ${variant === "embedded" ? "expertise-coverage--embedded" : ""} ${variant === "gate" ? "expertise-coverage--gate" : ""} ${className}`.trim()}
+      className={`expertise-coverage ${variant === "embedded" ? "expertise-coverage--embedded" : ""} ${variant === "gate" ? "expertise-coverage--gate" : ""} ${liteMode ? "expertise-coverage--lite" : ""} ${className}`.trim()}
       aria-label={portfolioEnvelope.coverageTitle}
     >
       <header className="expertise-coverage__head">
@@ -118,6 +127,14 @@ export function ExpertiseCoverageChart({
 
             {items.map((item, i) => {
               const pt = axisPoint(i, count, RADAR_MAX_R + 16);
+              if (liteMode) {
+                return (
+                  <g key={item.label} className="expertise-coverage__radar-dot">
+                    <title>{`${item.label} — ${item.coverage}%`}</title>
+                    <circle cx={pt.x} cy={pt.y} r="2.8" />
+                  </g>
+                );
+              }
               return (
                 <g
                   key={item.label}
@@ -136,7 +153,7 @@ export function ExpertiseCoverageChart({
           </svg>
         </div>
 
-        <ul className="expertise-coverage__bars" aria-label="Language expertise bars">
+        <ul className="expertise-coverage__bars" aria-label="Language expertise bars" hidden={liteMode}>
           {items.map((item) => (
             <li key={item.label} className="expertise-coverage__row" title={item.tags}>
               <span className="expertise-coverage__row-icon" aria-hidden>

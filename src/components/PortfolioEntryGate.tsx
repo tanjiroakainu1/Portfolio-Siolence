@@ -44,10 +44,10 @@ function DeveloperUnlockLoader({
     const tick = () => {
       const t = Math.min(1, (performance.now() - start) / duration);
       const next = t * 100;
-      setProgress((prev) => (Math.abs(next - prev) >= 0.8 ? next : prev));
+      setProgress((prev) => (Math.abs(next - prev) >= 1.5 ? next : prev));
     };
     tick();
-    const interval = window.setInterval(tick, 90);
+    const interval = window.setInterval(tick, 120);
 
     const doneTimer = window.setTimeout(onComplete, duration);
 
@@ -130,10 +130,12 @@ function EntryEnvelope({
   onUnlock,
   unlocking,
   navShake,
+  liteMode,
 }: {
   onUnlock: () => void;
   unlocking: boolean;
   navShake: boolean;
+  liteMode: boolean;
 }) {
   return (
     <div
@@ -144,14 +146,16 @@ function EntryEnvelope({
       <div className="portfolio-entry-envelope__halo" aria-hidden />
       <div className="portfolio-entry-envelope__beam" aria-hidden />
 
-      {SPARKLE_POSITIONS.map((pos, i) => (
-        <span
-          key={i}
-          className={`portfolio-entry-envelope__sparkle portfolio-entry-envelope__sparkle--${pos.size}`}
-          style={{ ...pos.style, animationDelay: pos.delay }}
-          aria-hidden
-        />
-      ))}
+      {!liteMode
+        ? SPARKLE_POSITIONS.map((pos, i) => (
+            <span
+              key={i}
+              className={`portfolio-entry-envelope__sparkle portfolio-entry-envelope__sparkle--${pos.size}`}
+              style={{ ...pos.style, animationDelay: pos.delay }}
+              aria-hidden
+            />
+          ))
+        : null}
 
       <div className={`portfolio-envelope__shell portfolio-entry-envelope__shell ${unlocking ? "is-leaving" : ""}`}>
         <div className="portfolio-envelope__paper portfolio-entry-envelope__paper" aria-hidden>
@@ -184,22 +188,26 @@ function EntryEnvelope({
 
             <div className="portfolio-entry-envelope__face-foot">
               <div className="portfolio-envelope__seal-wrap portfolio-envelope__seal-wrap--entry">
-                <span className="portfolio-entry-envelope__seal-orbit" aria-hidden />
+                {!liteMode ? <span className="portfolio-entry-envelope__seal-orbit" aria-hidden /> : null}
                 <div className="portfolio-envelope__seal portfolio-envelope__seal--entry">
                   <img src={portraitImageSrc} alt="" width={80} height={80} decoding="async" />
                 </div>
                 <span className="portfolio-envelope__seal-glow" aria-hidden />
-                <span className="portfolio-entry-envelope__wax" aria-hidden />
+                {!liteMode ? <span className="portfolio-entry-envelope__wax" aria-hidden /> : null}
               </div>
 
               <div className={`portfolio-entry-envelope__unlock-wrap ${navShake ? "is-shake" : ""}`}>
-                <span className="portfolio-entry-envelope__unlock-ring portfolio-entry-envelope__unlock-ring--outer" aria-hidden />
-                <span className="portfolio-entry-envelope__unlock-ring portfolio-entry-envelope__unlock-ring--inner" aria-hidden />
-                <span className="portfolio-entry-envelope__unlock-sparks" aria-hidden>
-                  <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--1">✦</span>
-                  <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--2">✦</span>
-                  <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--3">✦</span>
-                </span>
+                {!liteMode ? (
+                  <>
+                    <span className="portfolio-entry-envelope__unlock-ring portfolio-entry-envelope__unlock-ring--outer" aria-hidden />
+                    <span className="portfolio-entry-envelope__unlock-ring portfolio-entry-envelope__unlock-ring--inner" aria-hidden />
+                    <span className="portfolio-entry-envelope__unlock-sparks" aria-hidden>
+                      <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--1">✦</span>
+                      <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--2">✦</span>
+                      <span className="portfolio-entry-envelope__unlock-spark portfolio-entry-envelope__unlock-spark--3">✦</span>
+                    </span>
+                  </>
+                ) : null}
                 <button
                   type="button"
                   className={`portfolio-envelope__unlock-btn portfolio-envelope__unlock-btn--mystery ${navShake ? "is-pulse" : ""}`}
@@ -261,9 +269,12 @@ export function PortfolioEntryGate() {
   const liteMode = useMemo(() => {
     if (typeof window === "undefined") return true;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const narrow = window.matchMedia("(max-width: 960px)").matches;
-    const lowCores = (navigator.hardwareConcurrency ?? 8) <= 6;
-    return reducedMotion || (narrow && lowCores);
+    const compactViewport =
+      window.matchMedia("(max-width: 1280px)").matches || window.matchMedia("(max-height: 860px)").matches;
+    const lowCores = (navigator.hardwareConcurrency ?? 8) <= 8;
+    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+    const lowMemory = memory <= 8;
+    return reducedMotion || compactViewport || lowCores || lowMemory;
   }, []);
 
   useEffect(() => lockPageScroll(), []);
@@ -318,6 +329,7 @@ export function PortfolioEntryGate() {
               onUnlock={handleUnlock}
               unlocking={flapTriggered || loading}
               navShake={navShake}
+              liteMode={liteMode}
             />
           </div>
 
@@ -328,7 +340,11 @@ export function PortfolioEntryGate() {
           </span>
 
           <div className="portfolio-entry-screen__charts-col">
-            <ExpertiseCoverageChart variant="gate" className="portfolio-entry-screen__charts" />
+            <ExpertiseCoverageChart
+              variant="gate"
+              liteMode={liteMode}
+              className="portfolio-entry-screen__charts"
+            />
           </div>
         </div>
       </div>
